@@ -27,11 +27,12 @@ Algoritmo ordenar3MayorMenor
 		Si indice<2 Entonces
 			Si cambio=Falso Entonces
 				ordenado <- Verdadero
+			SiNo
+				indice <- 3
+				cambio <- Falso
 			FinSi
-			indice <- 3
-			cambio <- Falso
 		FinSi
 	FinMientras
-	Escribir 'Los números ordenados son ',salida[1],' ',salida[2],' ',salida[3]
+	Escribir 'Los números ordenados de mayor a menor son ',salida[1],', ',salida[2],', ',salida[3]
 FinAlgoritmo
 
