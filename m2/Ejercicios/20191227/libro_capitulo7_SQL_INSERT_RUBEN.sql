@@ -1,7 +1,4 @@
-﻿DROP TABLE estudian;
-DROP TABLE Asignaturas;
-DROP TABLE Profesores; 
---
+﻿--
 -- Inserting data into table alumnos
 --
 INSERT INTO alumnos(DNI_Al, Nombre_Al, Apellido1_Al, Apellido2_Al, Edad_Al, Telefono_Al, Direccion_Al, Ciudad_Al) VALUES
