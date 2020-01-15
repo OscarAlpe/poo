@@ -28,13 +28,13 @@ SELECT DISTINCT e.dorsal FROM etapa e INNER JOIN lleva l ON e.dorsal = l.dorsal;
 SELECT DISTINCT p.numetapa FROM  puerto p;
 
 -- 1.9 Indicar los km de las etapas que hayan ganado ciclistas de Banesto y que tengan puertos
-SELECT DISTINCT e.kms FROM etapa e INNER JOIN puerto p ON e.numetapa = p.numetapa INNER JOIN ciclista c ON e.dorsal = c.dorsal WHERE c.nomequipo = 'Banesto';
+SELECT DISTINCT e.kms, e.numetapa, c.nombre FROM (etapa e INNER JOIN puerto p ON e.numetapa = p.numetapa) INNER JOIN ciclista c ON e.dorsal = c.dorsal WHERE c.nomequipo = 'Banesto';
 
 -- 1.10 Listar el número de ciclistas que hayan ganado alguna etapa con puerto
-SELECT COUNT(DISTINCT dorsal) AS "Nº clicistas" FROM puerto;
+SELECT COUNT(DISTINCT e.dorsal) AS "Nº clicistas" FROM etapa e INNER JOIN puerto p ON e.numetapa = p.numetapa;
 
 -- 1.11 Indicar el nombre de los puertos que hayan sido ganados por ciclistas de Banesto
 SELECT p.nompuerto FROM puerto p INNER JOIN ciclista c ON p.dorsal = c.dorsal WHERE c.nomequipo = 'Banesto';
 
 -- 1.12 Listar el número de etapas que tengan puerto que hayan sido ganados por ciclistas de Banesto con más de 200 km
-SELECT COUNT(*) AS "Nº Etapas" FROM etapa e INNER JOIN puerto p ON e.numetapa = p.numetapa INNER JOIN ciclista c ON p.dorsal = c.dorsal WHERE c.nomequipo = 'Banesto' AND e.kms > 200;
+SELECT DISTINCT e.numetapa AS "Nº Etapa" FROM (etapa e INNER JOIN puerto p ON e.numetapa = p.numetapa) INNER JOIN ciclista c ON e.dorsal = c.dorsal WHERE c.nomequipo = 'Banesto' AND e.kms >= 200;
