@@ -41,5 +41,17 @@ SELECT DISTINCT c.dorsal FROM ciclista c INNER JOIN etapa e ON c.dorsal = e.dors
 -- 1.10 Listar el dorsal de los ciclistas que hayan ganado únicamente etapas que no tengan puertos
 SELECT DISTINCT c.dorsal FROM ciclista c INNER JOIN etapa e ON c.dorsal = e.dorsal WHERE e.numetapa IN (SELECT e.numetapa FROM etapa e EXCEPT SELECT p.numetapa FROM puerto p);
 
--- sobre la marcha: Equipos cuyos componentes hayan ganado TODOS una etapa
+-- Sobre la marcha: Equipos cuyos componentes hayan ganado TODOS al menos una etapa
 SELECT * FROM equipo e LEFT JOIN ciclista c ON e.nomequipo = c.nomequipo LEFT JOIN etapa e1 ON c.dorsal = e1.dorsal ORDER BY e.nomequipo;
+SELECT DISTINCT e.nomequipo FROM equipo e LEFT JOIN ciclista c ON e.nomequipo = c.nomequipo LEFT JOIN etapa e1 ON c.dorsal = e1.dorsal WHERE e1.dorsal IS NULL ORDER BY e.nomequipo;
+SELECT e2.nomequipo FROM equipo e2 EXCEPT
+  SELECT DISTINCT e.nomequipo FROM equipo e LEFT JOIN ciclista c ON e.nomequipo = c.nomequipo
+    LEFT JOIN etapa e1 ON c.dorsal = e1.dorsal WHERE e1.dorsal IS NULL;
+
+-- Misma consulta hecha por Rubén buscando los mismos ganadores de etapa que el número de de ciclistas en cada equipo
+SELECT * FROM
+  (SELECT c.nomequipo, COUNT(DISTINCT c.dorsal) AS numCliclistas FROM ciclista c
+    INNER JOIN etapa e USING(dorsal) GROUP BY c.nomequipo) AS ganadores
+INNER JOIN
+  (SELECT c.nomequipo, COUNT(*) AS numCliclistas2 FROM ciclista c GROUP BY c.nomequipo) AS corredores
+ON ganadores.nomequipo = corredores.nomequipo WHERE corredores.numCliclistas2 = ganadores.numCliclistas;
