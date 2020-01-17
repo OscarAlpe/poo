@@ -10,10 +10,10 @@
   </Properties>
   <Connection Name="postgres.localhost">
     <Category>00000000-0000-0000-0000-000000000000</Category>
-    <ConnectionString>User Id=postgres;Host=localhost;Port=5432;Database=libro_capitulo7;Unicode=True;Connection Timeout=15;Default Command Timeout=30;Integrated Security=False</ConnectionString>
-    <Database>libro_capitulo7</Database>
+    <ConnectionString>User Id=postgres;Host=localhost;Port=5432;Database=libro_7_varchar;Unicode=True;Connection Timeout=15;Default Command Timeout=30;Integrated Security=False</ConnectionString>
+    <Database>libro_7_varchar</Database>
   </Connection>
-  <Views ShowAdditionalViews="False" IsLayoutActiveAttribute="True" MainViewAttribute="Code" MainViewScale="50">
+  <Views ShowAdditionalViews="True" IsLayoutActiveAttribute="True" MainViewAttribute="Code" MainViewScale="50">
     <View Name="Code" Active="True" Visible="True">
       <Data />
     </View>
