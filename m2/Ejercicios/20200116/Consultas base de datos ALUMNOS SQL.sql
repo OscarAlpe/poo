@@ -22,11 +22,11 @@ from estudian e inner join (
 ) g
 on g.cod_as = e.cod_as and g.maxnum = e.nota_al_as INNER JOIN alumnos a ON e.dni_al = a.dni_al ORDER BY e.cod_as, e.dni_al;
 
--- 7 Alumnos que residen en la misma ciudad que "Margo Laughlin"
-SELECT * FROM alumnos a WHERE a.ciudad_al IN (SELECT a.ciudad_al FROM alumnos a WHERE a.nombre_al = 'Abby' AND a.apellido1_al = 'Plunkett');
-SELECT * FROM alumnos a INNER JOIN (SELECT DISTINCT a.ciudad_al FROM alumnos a WHERE a.nombre_al = 'Abby' AND a.apellido1_al = 'Plunkett') a2 ON a.ciudad_al = a2.ciudad_al;
+-- 7 Alumnos que residen en la misma ciudad que Kirby Stout
+SELECT * FROM alumnos a WHERE a.ciudad_al IN (SELECT a.ciudad_al FROM alumnos a WHERE a.nombre_al = 'Kirby' AND a.apellido1_al = 'Stout');
+SELECT * FROM alumnos a INNER JOIN (SELECT DISTINCT a.ciudad_al FROM alumnos a WHERE a.nombre_al = 'Kirby' AND a.apellido1_al = 'Stout') a2 ON a.ciudad_al = a2.ciudad_al;
 
--- 8 Nombre y apellido de alumnos ordenados de forma descendente por edad
+ -- 8 Nombre y apellido de alumnos ordenados de forma descendente por edad
 SELECT a.nombre_al, a.apellido1_al FROM alumnos a ORDER BY a.edad_al DESC;
 
 -- 9 Alumnos matriculados en más de tres asignaturas
@@ -41,30 +41,50 @@ SELECT p.apellido1_p, COUNT(p.apellido1_p) FROM profesores p GROUP BY p.apellido
 SELECT * FROM profesores p;
 BEGIN; DELETE FROM profesores WHERE apellido1_p = 'Thaler'; ROLLBACK;
 
--- 12 Mostrar las notas que tiene cada alumno y la asignatura a la que corresponde la misma (pero solo los alumnos que cursen más de dos asignaturas)
+-- 12 Mostrar las notas que tiene cada alumno y la asignatura a la que corresponde la misma (pero solo los alumnos que cursen más de tres asignaturas)
 SELECT e.dni_al, e.cod_as, nota_al_as FROM estudian e INNER JOIN (SELECT DISTINCT e.dni_al, COUNT(e.dni_al) AS NAsignaturas FROM estudian e GROUP BY e.dni_al) g ON e.dni_al = g.dni_al AND g.NAsignaturas > 2;
-SELECT * FROM estudian WHERE dni_al = '51650912Y'
+SELECT * FROM estudian WHERE dni_al = '51650912Y';
+SELECT * FROM alumnos a JOIN estudian e
+  ON a.dni_al = e.dni_al JOIN asignaturas a1 ON e.cod_as = a1.cod_as
+  JOIN (SELECT e.dni_al, COUNT(e.dni_al) FROM estudian e
+  GROUP BY e.dni_al HAVING COUNT(e.dni_al) >= 3) masdetres
+ON a.dni_al = masdetres.dni_al;
 
 -- 13 Mostrar la media, mínima y máxima que ha puesto cada profesor para cada una de las asignaturas que imparte
-SELECT p.nombre_p, a.nombre_as, ROUND(AVG(e.nota_al_as), 2), MIN(e.nota_al_as), MAX(e.nota_al_as) FROM estudian e
+SELECT p.nombre_p, a.nombre_as, ROUND(AVG(e.nota_al_as), 2) AS Media, MIN(e.nota_al_as), MAX(e.nota_al_as) FROM estudian e
   INNER JOIN asignaturas a ON e.cod_as = a.cod_as
-    INNER JOIN profesores p ON a.dni_p = p.dni_p GROUP BY p.nombre_p, e.cod_as, a.nombre_as;
+    INNER JOIN profesores p ON a.dni_p = p.dni_p GROUP BY p.nombre_p, a.nombre_as;
 
 -- 14 Mostrar un listado de alumnos y sus teléfonos ordenados alfabéticamente 
 SELECT a.nombre_al, a.apellido1_al, a.apellido2_al, a.telefono_al FROM alumnos a ORDER BY a.nombre_al, a.apellido1_al, a.apellido2_al, a.telefono_al;
 
 -- 15 Mostrar un listado de alumnos ordenados por su edad, de mayor a menor y, en caso de igualdad, alfabeticamente
-SELECT * FROM alumnos a ORDER BY a.edad_al ASC, a.nombre_al, a.apellido1_al, a.apellido2_al;
+SELECT * FROM alumnos a ORDER BY a.edad_al DESC, a.nombre_al, a.apellido1_al, a.apellido2_al;
 
 -- 16 Mostrar los alumnos que no han sacado una nota entre 7 y 9 o que viven en Hobart
 SELECT * FROM alumnos a INNER JOIN
   (SELECT a.dni_al FROM alumnos a WHERE a.ciudad_al = 'Hobart' EXCEPT
      SELECT e.dni_al FROM estudian e WHERE e.nota_al_as BETWEEN 7 AND 9) AS sq ON a.dni_al = sq.dni_al INNER JOIN estudian e ON a.dni_al = e.dni_al AND e.nota_al_as IS NOT NULL;
+SELECT a.nombre_al, a.apellido1_al FROM alumnos a, estudian e
+  WHERE a.dni_al = e.dni_al
+    AND (e.nota_al_as NOT BETWEEN 7 AND 9
+      OR a.ciudad_al = 'Hobart') AND e.nota_al_as IS NOT NULL;
 
 -- 17 Mostrar los alumnos que han aprobado alguna asignatura
 SELECT DISTINCT e.dni_al, a.nombre_al, a.apellido1_al, a.apellido2_al FROM estudian e INNER JOIN alumnos a ON e.dni_al = a.dni_al WHERE e.nota_al_as >= 5;
 
--- 18 Mostar la nota media del alumno "Ervin Gainey"
-SELECT ROUND(AVG(e.nota_al_as), 2) FROM estudian e INNER JOIN alumnos a ON e.dni_al = a.dni_al WHERE a.nombre_al = 'Ervin' AND a.apellido1_al = 'Gainey';
+-- 18 Mostar la nota media del alumno "Joie Scherer"
+SELECT ROUND(AVG(e.nota_al_as), 2) FROM estudian e INNER JOIN alumnos a ON e.dni_al = a.dni_al WHERE a.nombre_al = 'Joie' AND a.apellido1_al = 'Scherer';
 
--- 19 Mostrar, de la asignatura , la nota máxima, mínima, y la diferencia entre ambaas. DEvolver también el número de alumnos que la han cursado
+-- 19 Mostrar, de la asignatura , la nota máxima, mínima, y la diferencia entre ambas. Devolver también el número de alumnos que la han cursado
+SELECT a.nombre_as, MAX(e.nota_al_as), MIN(e.nota_al_as), MAX(e.nota_al_as) - MIN(e.nota_al_as) AS Diferencia, COUNT(*) AS nalumnos
+  FROM estudian e JOIN asignaturas a ON e.cod_as = a.cod_as
+  GROUP BY a.nombre_as;
+
+-- 20 Devolver la fecha de nacimiento del alumno mayor
+-- No se puede hacer porque no hay fecha de nacimiento en alumnos
+
+-- 21 Mostrar la Nota_Al_As media de cada alumno
+SELECT a.dni_al, a.nombre_al, ROUND(AVG(e.nota_al_as), 2) AS media FROM alumnos a
+  INNER JOIN estudian e ON a.dni_al = e.dni_al
+    WHERE e.nota_al_as IS NOT NULL GROUP BY a.dni_al ORDER BY a.dni_al;
