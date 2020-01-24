@@ -7,6 +7,7 @@ SELECT * FROM producto p INNER JOIN fabricante f ON p.codigo_fabricante = f.codi
 
 --       3. Devuelve un listado con el nombre y el precio de todos los productos de los fabricantes cuyo nombre termine por la vocal e.
 SELECT p.nombre, p.precio FROM producto p INNER JOIN fabricante f ON p.codigo_fabricante = f.codigo WHERE RIGHT(f.nombre, 1) = 'e';
+SELECT p.nombre, p.precio FROM producto p INNER JOIN (SELECT f.codigo FROM fabricante f WHERE f.nombre LIKE '%e') AS es ON es.codigo = p.codigo_fabricante;
 
 --       4. Devuelve un listado con el nombre y el precio de todos los productos de los fabricantes cuyo nombre contenga w.
 SELECT p.nombre, p.precio, f.nombre FROM producto p INNER JOIN fabricante f ON p.codigo_fabricante = f.codigo WHERE f.nombre LIKE '%w%';
@@ -40,7 +41,8 @@ SELECT MIN(p.precio) FROM producto p;
 SELECT MAX(p.precio) FROM producto p;
 
 --       5. Lista el nombre y el precio del producto más caro.
-SELECT p.nombre, p.precio FROM producto p INNER JOIN (SELECT MAX(p1.precio) AS precio FROM producto p1) mayor ON p.precio = mayor.precio;
+SELECT p.nombre, p.precio FROM producto p INNER JOIN (SELECT MAX(p1.precio) AS precio FROM producto p1) AS mayor ON p.precio = mayor.precio;
+SELECT p.nombre, p.precio FROM producto p WHERE p.precio = (SELECT MAX(p1.precio) FROM producto p1);
 
 --       6. Calcula la suma de los precios de todos los productos.
 SELECT SUM(p.precio) FROM producto p;
@@ -86,7 +88,9 @@ SELECT f.nombre FROM fabricante f INNER JOIN producto p ON f.codigo = p.codigo_f
 -- 1.1.7 Subconsultas (En la cláusula WHERE)
 -- 1.1.7.1 Con operadores básicos de comparación
 --       1. Devuelve todos los productos del fabricante Lenovo. (Sin utilizar INNER JOIN).
-SELECT * FROM producto p WHERE p.codigo_fabricante = (SELECT f.codigo FROM fabricante f WHERE f.nombre = 'Lenovo');
+SELECT * FROM producto p WHERE p.codigo_fabricante IN (SELECT f.codigo FROM fabricante f WHERE f.nombre = 'Lenovo');
+SELECT * FROM producto p, fabricante f
+  WHERE p.codigo_fabricante = f.codigo AND f.nombre = 'Lenovo';
 
 --       2. Devuelve todos los datos de los productos que tienen el mismo precio que el producto más caro del fabricante Lenovo. (Sin utilizar INNER JOIN).
 SELECT * FROM producto p WHERE p.precio = (SELECT MAX(p2.precio) FROM producto p2 WHERE p2.codigo_fabricante = (SELECT f.codigo FROM fabricante f WHERE nombre = 'Lenovo'));
@@ -123,15 +127,22 @@ SELECT f.nombre FROM fabricante f WHERE f.codigo IN (SELECT p.codigo_fabricante 
 
 -- 1.1.7.4 Subconsultas con EXISTS y NOT EXISTS
 --         1. Devuelve los nombres de los fabricantes que tienen productos asociados (utilizando EXISTS o NOT EXISTS).
-SELECT * FROM fabricante f WHERE EXISTS (SELECT 1 FROM producto p WHERE f.codigo = p.codigo_fabricante);
+SELECT f.nombre FROM fabricante f WHERE EXISTS (SELECT 1 FROM producto p WHERE f.codigo = p.codigo_fabricante);
 
 --         2. Devuelve los nombres de los fabricantes que no tienen productos asociados (utilizando EXISTS o NOT EXISTS).
-SELECT * FROM fabricante f WHERE NOT EXISTS (SELECT 1 FROM producto p WHERE f.codigo = p.codigo_fabricante);
+SELECT f.nombre FROM fabricante f WHERE NOT EXISTS (SELECT 1 FROM producto p WHERE f.codigo = p.codigo_fabricante);
 
 -- 1.1.7.5 Subconsultas correlacionadas
 --         1. Lista el nombre de cada fabricante con el nombre y el precio de su producto más caro.
-SELECT f.nombre, (SELECT p.nombre FROM producto p WHERE p.codigo_fabricante = f.codigo AND p.precio = (SELECT MAX(p.precio) FROM producto p WHERE p.codigo_fabricante = f.codigo)),
-  (SELECT MAX(p.precio) FROM producto p WHERE p.codigo_fabricante = f.codigo) AS "Precio" FROM fabricante f;
+SELECT f.nombre AS "Proveedor", (SELECT p.nombre FROM producto p WHERE p.codigo_fabricante = f.codigo AND p.precio = (SELECT MAX(p.precio) FROM producto p WHERE p.codigo_fabricante = f.codigo)) AS "Producto",
+  (SELECT MAX(p.precio) FROM producto p WHERE p.codigo_fabricante = f.codigo) AS "Precio" FROM fabricante f ORDER BY "Precio";
+SELECT f.nombre, c2.nombre, c2.preciomax FROM
+    (SELECT preciomax, p,nombre, c1.codigo_fabricante FROM
+      (SELECT MAX(precio) AS preciomax, codigo_fabricante FROM producto p
+                       GROUP BY codigo_fabricante) c1
+    JOIN producto p ON c1.codigo_fabricante = p.codigo_fabricante
+      WHERE p.precio  = c1.preciomax) c2
+    JOIN fabricante f ON f.codigo = c2.codigo_fabricante ORDER BY c2.preciomax;
 
 --         2. Devuelve un listado de todos los productos que tienen un precio mayor o igual a la media de todos los productos de su mismo fabricante.
 SELECT * FROM producto p WHERE p.precio >= (SELECT AVG(p2.precio) FROM producto p2 WHERE p.codigo_fabricante = p2.codigo_fabricante);
