@@ -18,8 +18,5 @@
       <Data />
     </View>
     <View Name="Data" Visible="True" />
-    <View Name="Profiler" Visible="False" />
-    <View Name="PivotGrid" Visible="False" />
   </Views>
-  <ProfilingMode Enabled="False" />
 </Document>
