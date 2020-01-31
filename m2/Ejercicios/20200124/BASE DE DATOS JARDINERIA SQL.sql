@@ -86,3 +86,53 @@ SELECT p.codigo_producto, p.nombre FROM producto p WHERE cantidad_en_stock < ALL
 --         11. Devuelve el nombre, apellido1 y cargo de los empleados que no representen a ningún cliente.
 SELECT e.nombre, e.apellido1, e.puesto FROM empleado e
     WHERE e.codigo_empleado NOT IN (SELECT c.codigo_empleado_rep_ventas FROM cliente c);
+
+-- 1.4.8.4 Subconsultas con EXISTS y NOT EXISTS
+--         19. Devuelve un listado de los productos que han aparecido en un pedido alguna vez
+SELECT codigo_producto, nombre FROM producto WHERE EXISTS (SELECT DISTINCT codigo_producto FROM detalle_pedido
+                                                             WHERE codigo_producto = producto.codigo_producto);
+
+-- 1.4.9 Consultas variadas
+--       5. Devuelve el listado de clientes donde aparezca el nombre del cliente, el nombre y primer apellido de su representante de ventas y la ciudad donde esté su oficina.
+SELECT cliente.nombre_cliente, empleado.nombre, empleado.apellido1, oficina.ciudad FROM cliente
+  JOIN empleado ON codigo_empleado_rep_ventas = codigo_empleado
+    JOIN oficina ON empleado.codigo_oficina = oficina.codigo_oficina;
+
+--       7. Devuelve un listado indicando todas las ciudades donde hay oficinas y el número de empleados que tiene.
+SELECT ciudad, COUNT(empleado.codigo_empleado) AS "Número de empleados" FROM oficina JOIN empleado ON oficina.codigo_oficina = empleado.codigo_oficina GROUP BY ciudad;
+SELECT codigo_oficina, COUNT(codigo_empleado) FROM empleado GROUP BY codigo_oficina;
+
+-- Vistas
+CREATE VIEW BaseImponible AS SELECT SUM(cantidad*precio_unidad) AS base_imponible FROM detalle_pedido;
+
+SELECT base_imponible AS "Base Imponible", base_imponible * 0.21 AS "IVA", base_imponible * 1.21 AS "Total Facturado" FROM BaseImponible;
+
+SELECT * FROM BaseImponible;
+
+-- Crea un schema diferente de public (por defecto)
+CREATE SCHEMA oscar;
+
+-- Cambia al schema oscar por defecto.
+SET search_path = oscar;
+
+-- Creamos la tabla oficina
+CREATE TABLE oficina (
+  codigo_oficina VARCHAR(10) NOT NULL,
+  ciudad VARCHAR(30) NOT NULL,
+  pais VARCHAR(50) NOT NULL,
+  region VARCHAR(50) DEFAULT NULL,
+  codigo_postal VARCHAR(10) NOT NULL,
+  telefono VARCHAR(20) NOT NULL,
+  linea_direccion1 VARCHAR(50) NOT NULL,
+  linea_direccion2 VARCHAR(50) DEFAULT NULL,
+  PRIMARY KEY (codigo_oficina)
+);
+
+-- Y ahora está vacia en el (schema oscar)
+SELECT * FROM oficina;
+
+-- Cambiamos al schema public
+SET search_path = public;
+
+-- Y ahora oficina tiene datos
+SELECT * FROM oficina;
