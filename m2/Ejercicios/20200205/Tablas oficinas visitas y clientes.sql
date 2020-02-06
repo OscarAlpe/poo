@@ -5,7 +5,6 @@ CREATE TABLE oficinas (
   telefono_ofi varchar(9),
   fax_ofi varchar(9),
   PRIMARY KEY(id_ofi),
-  REFERENCES inmuebles(id_ofi) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 -- Tabla visitas
@@ -26,7 +25,10 @@ CREATE TABLE clientes (
   inmueble_preferido_cli int,
   importe_maximo_cli int,
   PRIMARY KEY(id_cli),
-  REFERENCES visitas(id_cli) ON DELETE CASCADE ON UPDATE CASCADE,
-  REFERENCES facturas(id_cli) ON DELETE CASCADE ON UPDATE CASCADE,
-  REFERENCES contrato(id_cli) ON DELETE CASCADE ON UPDATE CASCADE
 );
+
+ALTER TABLE oficinas ADD FOREIGN KEY (id_ofi) REFERENCES inmuebles(id_ofi) ON DELETE CASCADE ON UPDATE CASCADE;
+
+ALTER TABLE clientes ADD FOREIGN KEY (id_cli) REFERENCES visitas(id_cli) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE clientes ADD FOREIGN KEY (id_cli) REFERENCES facturas(id_cli) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE clientes ADD FOREIGN KEY (id_cli) REFERENCES contrato(id_cli) ON DELETE CASCADE ON UPDATE CASCADE;
