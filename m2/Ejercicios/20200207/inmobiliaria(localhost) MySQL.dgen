@@ -136,12 +136,10 @@
         <Column Name="importe_maximo_cli">
           <Checked>true</Checked>
           <DataType>INT</DataType>
-          <GeneratorOptions xsi:type="MySqlWeightedListGeneratorRangeValuesOptions">
+          <GeneratorOptions xsi:type="MySqlWeightedListGeneratorRegexValuesOptions">
             <AllowEmptyStrings>false</AllowEmptyStrings>
             <EmptyStringProportion>10</EmptyStringProportion>
-            <ColumnDataTypeName>INT</ColumnDataTypeName>
-            <Scale>0</Scale>
-            <Precision>11</Precision>
+            <MaxSize>10</MaxSize>
             <AllowNulls>true</AllowNulls>
             <NullProportion>10</NullProportion>
             <ValueDistributionMode>Random</ValueDistributionMode>
@@ -150,87 +148,14 @@
             <IsAlwaysUnique>false</IsAlwaysUnique>
             <Values>
               <WeightedListItem>
-                <Value xsi:type="WeightedListRangeItem">
-                  <From xsi:type="xsd:decimal">50000</From>
-                  <To xsi:type="xsd:decimal">50000</To>
-                  <DateTimeOffsetFromValue />
-                  <DateTimeOffsetToValue />
-                  <TimeSpanFromValue>-1</TimeSpanFromValue>
-                  <TimeSpanToValue>-1</TimeSpanToValue>
-                </Value>
+                <Value xsi:type="xsd:string">[1-9][05][0]{3,4}</Value>
                 <Weight>25</Weight>
-              </WeightedListItem>
-              <WeightedListItem>
-                <Value xsi:type="WeightedListRangeItem">
-                  <From xsi:type="xsd:decimal">100000</From>
-                  <To xsi:type="xsd:decimal">100000</To>
-                  <DateTimeOffsetFromValue />
-                  <DateTimeOffsetToValue />
-                  <TimeSpanFromValue>-1</TimeSpanFromValue>
-                  <TimeSpanToValue>-1</TimeSpanToValue>
-                </Value>
-                <Weight>25</Weight>
-              </WeightedListItem>
-              <WeightedListItem>
-                <Value xsi:type="WeightedListRangeItem">
-                  <From xsi:type="xsd:decimal">125000</From>
-                  <To xsi:type="xsd:decimal">125000</To>
-                  <DateTimeOffsetFromValue />
-                  <DateTimeOffsetToValue />
-                  <TimeSpanFromValue>-1</TimeSpanFromValue>
-                  <TimeSpanToValue>-1</TimeSpanToValue>
-                </Value>
-                <Weight>25</Weight>
-              </WeightedListItem>
-              <WeightedListItem>
-                <Value xsi:type="WeightedListRangeItem">
-                  <From xsi:type="xsd:decimal">150000</From>
-                  <To xsi:type="xsd:decimal">150000</To>
-                  <DateTimeOffsetFromValue />
-                  <DateTimeOffsetToValue />
-                  <TimeSpanFromValue>-1</TimeSpanFromValue>
-                  <TimeSpanToValue>-1</TimeSpanToValue>
-                </Value>
-                <Weight>25</Weight>
-              </WeightedListItem>
-              <WeightedListItem>
-                <Value xsi:type="WeightedListRangeItem">
-                  <From xsi:type="xsd:decimal">175000</From>
-                  <To xsi:type="xsd:decimal">175000</To>
-                  <DateTimeOffsetFromValue />
-                  <DateTimeOffsetToValue />
-                  <TimeSpanFromValue>-1</TimeSpanFromValue>
-                  <TimeSpanToValue>-1</TimeSpanToValue>
-                </Value>
-                <Weight>15</Weight>
-              </WeightedListItem>
-              <WeightedListItem>
-                <Value xsi:type="WeightedListRangeItem">
-                  <From xsi:type="xsd:decimal">200000</From>
-                  <To xsi:type="xsd:decimal">200000</To>
-                  <DateTimeOffsetFromValue />
-                  <DateTimeOffsetToValue />
-                  <TimeSpanFromValue>-1</TimeSpanFromValue>
-                  <TimeSpanToValue>-1</TimeSpanToValue>
-                </Value>
-                <Weight>15</Weight>
-              </WeightedListItem>
-              <WeightedListItem>
-                <Value xsi:type="WeightedListRangeItem">
-                  <From xsi:type="xsd:decimal">225000</From>
-                  <To xsi:type="xsd:decimal">225000</To>
-                  <DateTimeOffsetFromValue />
-                  <DateTimeOffsetToValue />
-                  <TimeSpanFromValue>-1</TimeSpanFromValue>
-                  <TimeSpanToValue>-1</TimeSpanToValue>
-                </Value>
-                <Weight>15</Weight>
               </WeightedListItem>
             </Values>
           </GeneratorOptions>
-          <GeneratorType>MySqlWeightedListGeneratorRangeValues</GeneratorType>
-          <GeneratorName>Weighted List (ranged)</GeneratorName>
-          <GeneratorDescription>ranged values list with specified frequency of occurrence</GeneratorDescription>
+          <GeneratorType>MySqlWeightedListGeneratorRegexValues</GeneratorType>
+          <GeneratorName>Weighted List (regexp)</GeneratorName>
+          <GeneratorDescription>values list based on regular expressions with specified frequency of occurrence</GeneratorDescription>
           <Precision>11</Precision>
         </Column>
       </Columns>
@@ -1288,7 +1213,7 @@ Kwik-E-Mart|La Compañía|LexCorp|Oceanic Airlines|Skynet|Tabacalera|Laramie|Tri
             <NullProportion>10</NullProportion>
             <Unique>false</Unique>
             <IsAlwaysUnique>false</IsAlwaysUnique>
-            <Increment xsi:type="xsd:int">1</Increment>
+            <Increment xsi:type="xsd:decimal">1</Increment>
             <ValueDistributionMode>Random</ValueDistributionMode>
             <SeedValue>1</SeedValue>
             <MinValue>25</MinValue>
@@ -1325,7 +1250,7 @@ Kwik-E-Mart|La Compañía|LexCorp|Oceanic Airlines|Skynet|Tabacalera|Laramie|Tri
             <NullProportion>0</NullProportion>
             <Unique>true</Unique>
             <IsAlwaysUnique>false</IsAlwaysUnique>
-            <Increment xsi:type="xsd:int">1</Increment>
+            <Increment xsi:type="xsd:decimal">1</Increment>
             <ValueDistributionMode>Sequential</ValueDistributionMode>
             <SeedValue>1</SeedValue>
             <MinValue>0</MinValue>
@@ -1341,22 +1266,26 @@ Kwik-E-Mart|La Compañía|LexCorp|Oceanic Airlines|Skynet|Tabacalera|Laramie|Tri
         <Column Name="importe_mensual_con">
           <Checked>true</Checked>
           <DataType>INT</DataType>
-          <GeneratorOptions xsi:type="MySqlIntegerGeneratorOptions">
+          <GeneratorOptions xsi:type="MySqlWeightedListGeneratorRegexValuesOptions">
+            <AllowEmptyStrings>false</AllowEmptyStrings>
+            <EmptyStringProportion>10</EmptyStringProportion>
+            <MaxSize>10</MaxSize>
             <AllowNulls>true</AllowNulls>
             <NullProportion>10</NullProportion>
+            <ValueDistributionMode>Random</ValueDistributionMode>
+            <SeedValue>7</SeedValue>
             <Unique>false</Unique>
             <IsAlwaysUnique>false</IsAlwaysUnique>
-            <Increment xsi:type="xsd:int">1</Increment>
-            <ValueDistributionMode>Random</ValueDistributionMode>
-            <SeedValue>6</SeedValue>
-            <MinValue>300</MinValue>
-            <MaxValue>1200</MaxValue>
-            <UseDefault>false</UseDefault>
-            <DefaultValue>NULL</DefaultValue>
+            <Values>
+              <WeightedListItem>
+                <Value xsi:type="xsd:string">[1-9][05]0</Value>
+                <Weight>25</Weight>
+              </WeightedListItem>
+            </Values>
           </GeneratorOptions>
-          <GeneratorType>MySqlIntegerGenerator</GeneratorType>
-          <GeneratorName>int</GeneratorName>
-          <GeneratorDescription>fill with 32-bit signed integer values</GeneratorDescription>
+          <GeneratorType>MySqlWeightedListGeneratorRegexValues</GeneratorType>
+          <GeneratorName>Weighted List (regexp)</GeneratorName>
+          <GeneratorDescription>values list based on regular expressions with specified frequency of occurrence</GeneratorDescription>
           <Precision>11</Precision>
         </Column>
         <Column Name="metodo_pago_con">
@@ -1381,22 +1310,36 @@ Kwik-E-Mart|La Compañía|LexCorp|Oceanic Airlines|Skynet|Tabacalera|Laramie|Tri
         <Column Name="importe_deposito_con">
           <Checked>true</Checked>
           <DataType>INT</DataType>
-          <GeneratorOptions xsi:type="MySqlIntegerGeneratorOptions">
+          <GeneratorOptions xsi:type="PythonGeneratorOptions">
             <AllowNulls>true</AllowNulls>
             <NullProportion>10</NullProportion>
             <Unique>false</Unique>
             <IsAlwaysUnique>false</IsAlwaysUnique>
-            <Increment xsi:type="xsd:int">1</Increment>
             <ValueDistributionMode>Random</ValueDistributionMode>
-            <SeedValue>7</SeedValue>
-            <MinValue>50</MinValue>
-            <MaxValue>500</MaxValue>
-            <UseDefault>false</UseDefault>
-            <DefaultValue>NULL</DefaultValue>
+            <SeedValue>8</SeedValue>
+            <Expression># Specify your own script here
+
+def main(config):
+    # column_name - is the column name
+    # config["column_type"] - is the column datatype
+    # config["column_size"] - is the column size
+    # config["n_rows"] - is the number of rows
+    # config["seed"] - is the current random seed
+    # config["is_unique"] - is the current random unique
+    # config["config_path"] - is the path to the meaningful generators folder
+	my_list = []
+	
+	if not importe_mensual_con:
+		my_list.append(None)
+	else:
+		my_list.append(int(importe_mensual_con) * 2)
+
+	return my_list
+</Expression>
           </GeneratorOptions>
-          <GeneratorType>MySqlIntegerGenerator</GeneratorType>
-          <GeneratorName>int</GeneratorName>
-          <GeneratorDescription>fill with 32-bit signed integer values</GeneratorDescription>
+          <GeneratorType>MySqlPythonGenerator</GeneratorType>
+          <GeneratorName>Python</GeneratorName>
+          <GeneratorDescription>generates data using an IronPython script</GeneratorDescription>
           <Precision>11</Precision>
         </Column>
         <Column Name="esta_cancelado_con">
