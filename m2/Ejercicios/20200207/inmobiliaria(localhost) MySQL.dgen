@@ -116,22 +116,24 @@
         </Column>
         <Column Name="inmueble_preferido_cli">
           <Checked>true</Checked>
-          <DataType>VARCHAR</DataType>
-          <GeneratorOptions xsi:type="MySqlRegularExpressionGeneratorOptions">
-            <AllowEmptyStrings>true</AllowEmptyStrings>
-            <EmptyStringProportion>10</EmptyStringProportion>
+          <DataType>INT</DataType>
+          <GeneratorOptions xsi:type="MySqlIntegerGeneratorOptions">
             <AllowNulls>true</AllowNulls>
             <NullProportion>10</NullProportion>
-            <ValueDistributionMode>Random</ValueDistributionMode>
-            <SeedValue>5</SeedValue>
             <Unique>false</Unique>
             <IsAlwaysUnique>false</IsAlwaysUnique>
-            <Expression>Casa rural|Apartamento|Chalet individual|Piso|Buhardilla|Chalet adosado</Expression>
+            <Increment xsi:type="xsd:int">1</Increment>
+            <ValueDistributionMode>Random</ValueDistributionMode>
+            <SeedValue>3</SeedValue>
+            <MinValue>0</MinValue>
+            <MaxValue>100</MaxValue>
+            <UseDefault>false</UseDefault>
+            <DefaultValue>NULL</DefaultValue>
           </GeneratorOptions>
-          <GeneratorType>MySqlStringRegularExpressionGenerator</GeneratorType>
-          <GeneratorName>Reg Exp</GeneratorName>
-          <GeneratorDescription>values based on a regular expression</GeneratorDescription>
-          <Length>255</Length>
+          <GeneratorType>MySqlIntegerGenerator</GeneratorType>
+          <GeneratorName>int</GeneratorName>
+          <GeneratorDescription>fill with 32-bit signed integer values</GeneratorDescription>
+          <Precision>11</Precision>
         </Column>
         <Column Name="importe_maximo_cli">
           <Checked>true</Checked>
@@ -207,7 +209,7 @@
             <SeedValue>31</SeedValue>
             <Unique>false</Unique>
             <IsAlwaysUnique>false</IsAlwaysUnique>
-            <Expression>[0-9A-Z]+</Expression>
+            <Expression>Isabel II|Alto Miranda|General Dávila|Plaza Mayor|Camilo Alonso Vega|Daoiz y Velarde|Paseo Pereda</Expression>
           </GeneratorOptions>
           <GeneratorType>MySqlStringRegularExpressionGenerator</GeneratorType>
           <GeneratorName>Reg Exp</GeneratorName>
@@ -226,7 +228,7 @@
             <SeedValue>32</SeedValue>
             <Unique>false</Unique>
             <IsAlwaysUnique>false</IsAlwaysUnique>
-            <Expression>[0-9A-Z]+</Expression>
+            <Expression>(91|942|93|943)([0-9]){6,6}</Expression>
           </GeneratorOptions>
           <GeneratorType>MySqlStringRegularExpressionGenerator</GeneratorType>
           <GeneratorName>Reg Exp</GeneratorName>
@@ -245,7 +247,7 @@
             <SeedValue>33</SeedValue>
             <Unique>false</Unique>
             <IsAlwaysUnique>false</IsAlwaysUnique>
-            <Expression>[0-9A-Z]+</Expression>
+            <Expression>(91|942|93|943)([0-9]){6,6}</Expression>
           </GeneratorOptions>
           <GeneratorType>MySqlStringRegularExpressionGenerator</GeneratorType>
           <GeneratorName>Reg Exp</GeneratorName>
@@ -301,7 +303,7 @@
             <SeedValue>40</SeedValue>
             <Unique>false</Unique>
             <IsAlwaysUnique>false</IsAlwaysUnique>
-            <Expression>[0-9A-Z]+</Expression>
+            <Expression>Pedro|José|Daniel|Rubén|Pablo|Agustín|Oscar|Antonio|Andrés</Expression>
           </GeneratorOptions>
           <GeneratorType>MySqlStringRegularExpressionGenerator</GeneratorType>
           <GeneratorName>Reg Exp</GeneratorName>
@@ -320,7 +322,7 @@
             <SeedValue>41</SeedValue>
             <Unique>false</Unique>
             <IsAlwaysUnique>false</IsAlwaysUnique>
-            <Expression>[0-9A-Z]+</Expression>
+            <Expression>Isabel II|Alto Miranda|General Dávila|Plaza Mayor|Camilo Alonso Vega|Daoiz y Velarde|Paseo Pereda</Expression>
           </GeneratorOptions>
           <GeneratorType>MySqlStringRegularExpressionGenerator</GeneratorType>
           <GeneratorName>Reg Exp</GeneratorName>
@@ -330,43 +332,39 @@
         <Column Name="telefono_per">
           <Checked>true</Checked>
           <DataType>INT</DataType>
-          <GeneratorOptions xsi:type="MySqlIntegerGeneratorOptions">
+          <GeneratorOptions xsi:type="MySqlRegularExpressionGeneratorOptions">
+            <AllowEmptyStrings>false</AllowEmptyStrings>
+            <EmptyStringProportion>10</EmptyStringProportion>
             <AllowNulls>true</AllowNulls>
             <NullProportion>10</NullProportion>
+            <ValueDistributionMode>Random</ValueDistributionMode>
+            <SeedValue>42</SeedValue>
             <Unique>false</Unique>
             <IsAlwaysUnique>false</IsAlwaysUnique>
-            <Increment xsi:type="xsd:int">1</Increment>
-            <ValueDistributionMode>Random</ValueDistributionMode>
-            <SeedValue>41</SeedValue>
-            <MinValue>-2147483648</MinValue>
-            <MaxValue>2147483647</MaxValue>
-            <UseDefault>false</UseDefault>
-            <DefaultValue>NULL</DefaultValue>
+            <Expression>(91|942|93|943)([0-9]){6,6}</Expression>
           </GeneratorOptions>
-          <GeneratorType>MySqlIntegerGenerator</GeneratorType>
-          <GeneratorName>int</GeneratorName>
-          <GeneratorDescription>fill with 32-bit signed integer values</GeneratorDescription>
+          <GeneratorType>MySqlRegularExpressionGenerator</GeneratorType>
+          <GeneratorName>Reg Exp</GeneratorName>
+          <GeneratorDescription>values based on a regular expression</GeneratorDescription>
           <Precision>11</Precision>
         </Column>
         <Column Name="fax_per">
           <Checked>true</Checked>
           <DataType>INT</DataType>
-          <GeneratorOptions xsi:type="MySqlIntegerGeneratorOptions">
+          <GeneratorOptions xsi:type="MySqlRegularExpressionGeneratorOptions">
+            <AllowEmptyStrings>false</AllowEmptyStrings>
+            <EmptyStringProportion>10</EmptyStringProportion>
             <AllowNulls>true</AllowNulls>
             <NullProportion>10</NullProportion>
+            <ValueDistributionMode>Random</ValueDistributionMode>
+            <SeedValue>43</SeedValue>
             <Unique>false</Unique>
             <IsAlwaysUnique>false</IsAlwaysUnique>
-            <Increment xsi:type="xsd:int">1</Increment>
-            <ValueDistributionMode>Random</ValueDistributionMode>
-            <SeedValue>42</SeedValue>
-            <MinValue>-2147483648</MinValue>
-            <MaxValue>2147483647</MaxValue>
-            <UseDefault>false</UseDefault>
-            <DefaultValue>NULL</DefaultValue>
+            <Expression>(91|942|93|943)([0-9]){6,6}</Expression>
           </GeneratorOptions>
-          <GeneratorType>MySqlIntegerGenerator</GeneratorType>
-          <GeneratorName>int</GeneratorName>
-          <GeneratorDescription>fill with 32-bit signed integer values</GeneratorDescription>
+          <GeneratorType>MySqlRegularExpressionGenerator</GeneratorType>
+          <GeneratorName>Reg Exp</GeneratorName>
+          <GeneratorDescription>values based on a regular expression</GeneratorDescription>
           <Precision>11</Precision>
         </Column>
         <Column Name="nombre_pers_cont_per">
@@ -381,7 +379,7 @@
             <SeedValue>42</SeedValue>
             <Unique>false</Unique>
             <IsAlwaysUnique>false</IsAlwaysUnique>
-            <Expression>[0-9A-Z]+</Expression>
+            <Expression>Pedro|José|Daniel|Rubén|Pablo|Agustín|Oscar|Antonio|Andrés</Expression>
           </GeneratorOptions>
           <GeneratorType>MySqlStringRegularExpressionGenerator</GeneratorType>
           <GeneratorName>Reg Exp</GeneratorName>
@@ -437,7 +435,7 @@
             <SeedValue>43</SeedValue>
             <Unique>false</Unique>
             <IsAlwaysUnique>false</IsAlwaysUnique>
-            <Expression>[0-9A-Z]+</Expression>
+            <Expression>Pedro|José|Daniel|Rubén|Pablo|Agustín|Oscar|Antonio|Andrés</Expression>
           </GeneratorOptions>
           <GeneratorType>MySqlStringRegularExpressionGenerator</GeneratorType>
           <GeneratorName>Reg Exp</GeneratorName>
@@ -456,7 +454,7 @@
             <SeedValue>44</SeedValue>
             <Unique>false</Unique>
             <IsAlwaysUnique>false</IsAlwaysUnique>
-            <Expression>[0-9A-Z]+</Expression>
+            <Expression>Isabel II|Alto Miranda|General Dávila|Plaza Mayor|Camilo Alonso Vega|Daoiz y Velarde|Paseo Pereda</Expression>
           </GeneratorOptions>
           <GeneratorType>MySqlStringRegularExpressionGenerator</GeneratorType>
           <GeneratorName>Reg Exp</GeneratorName>
@@ -466,22 +464,20 @@
         <Column Name="telefono_pro">
           <Checked>true</Checked>
           <DataType>INT</DataType>
-          <GeneratorOptions xsi:type="MySqlIntegerGeneratorOptions">
+          <GeneratorOptions xsi:type="MySqlRegularExpressionGeneratorOptions">
+            <AllowEmptyStrings>false</AllowEmptyStrings>
+            <EmptyStringProportion>10</EmptyStringProportion>
             <AllowNulls>true</AllowNulls>
             <NullProportion>10</NullProportion>
+            <ValueDistributionMode>Random</ValueDistributionMode>
+            <SeedValue>45</SeedValue>
             <Unique>false</Unique>
             <IsAlwaysUnique>false</IsAlwaysUnique>
-            <Increment xsi:type="xsd:int">1</Increment>
-            <ValueDistributionMode>Random</ValueDistributionMode>
-            <SeedValue>44</SeedValue>
-            <MinValue>-2147483648</MinValue>
-            <MaxValue>2147483647</MaxValue>
-            <UseDefault>false</UseDefault>
-            <DefaultValue>NULL</DefaultValue>
+            <Expression>(91|942|93|943)([0-9]){6,6}</Expression>
           </GeneratorOptions>
-          <GeneratorType>MySqlIntegerGenerator</GeneratorType>
-          <GeneratorName>int</GeneratorName>
-          <GeneratorDescription>fill with 32-bit signed integer values</GeneratorDescription>
+          <GeneratorType>MySqlRegularExpressionGenerator</GeneratorType>
+          <GeneratorName>Reg Exp</GeneratorName>
+          <GeneratorDescription>values based on a regular expression</GeneratorDescription>
           <Precision>11</Precision>
         </Column>
         <Column Name="tipo_empresa_pro">
@@ -496,7 +492,7 @@
             <SeedValue>45</SeedValue>
             <Unique>false</Unique>
             <IsAlwaysUnique>false</IsAlwaysUnique>
-            <Expression>[0-9A-Z]+</Expression>
+            <Expression>Sociedad Anónima|Sociedad de Responsabilidad Limitada|Sociedad Laboral|Sociedad Colectiva|Sociedad Cooperativa</Expression>
           </GeneratorOptions>
           <GeneratorType>MySqlStringRegularExpressionGenerator</GeneratorType>
           <GeneratorName>Reg Exp</GeneratorName>
@@ -515,7 +511,7 @@
             <SeedValue>46</SeedValue>
             <Unique>false</Unique>
             <IsAlwaysUnique>false</IsAlwaysUnique>
-            <Expression>[0-9A-Z]+</Expression>
+            <Expression>Pedro|José|Daniel|Rubén|Pablo|Agustín|Oscar|Antonio|Andrés</Expression>
           </GeneratorOptions>
           <GeneratorType>MySqlStringRegularExpressionGenerator</GeneratorType>
           <GeneratorName>Reg Exp</GeneratorName>
@@ -590,42 +586,7 @@
             <SeedValue>13</SeedValue>
             <Unique>false</Unique>
             <IsAlwaysUnique>false</IsAlwaysUnique>
-            <Expression>    Corporación Acme
-    Alchemax
-    Aperture Science
-
-B
-
-    Black Mesa Research Facility
-
-C
-
-    Compañía de Energía Roxxon
-    Control de Daños (cómic)
-    Corporación Ajax
-    Corporación Umbrella
-
-D
-
-    Dunder Mifflin
-
-E
-
-    Empresas Tecnológicas Cross
-    Empresas Wayne
-
-F
-
-    Fundación Vida
-
-I
-
-    Industrias Kord
-    Industrias Oscorp
-    Industrias Parker
-    Industrias Stark
-
-Kwik-E-Mart|La Compañía|LexCorp|Oceanic Airlines|Skynet|Tabacalera|Laramie|Tricell|U.S. Robots|Mechanical Men</Expression>
+            <Expression>Corporación Acme|Alchemax|Aperture Science|Black Mesa Research Facility|Compañía de Energía Roxxon|Control de Daños (cómic)|Corporación Ajax|Corporación Umbrella|Dunder Mifflin|Empresas Tecnológicas Cross|Empresas Wayne|Fundación Vida|Industrias Kord|Industrias Oscorp|Industrias Parker|Industrias Stark|Kwik-E-Mart|La Compañía|LexCorp|Oceanic Airlines|Skynet|Tabacalera|Laramie|Tricell|U.S. Robots|Mechanical Men</Expression>
           </GeneratorOptions>
           <GeneratorType>MySqlStringRegularExpressionGenerator</GeneratorType>
           <GeneratorName>Reg Exp</GeneratorName>
@@ -663,7 +624,7 @@ Kwik-E-Mart|La Compañía|LexCorp|Oceanic Airlines|Skynet|Tabacalera|Laramie|Tri
             <SeedValue>15</SeedValue>
             <Unique>false</Unique>
             <IsAlwaysUnique>false</IsAlwaysUnique>
-            <Expression>[0-9A-Z]+</Expression>
+            <Expression>(91|942|93|943)([0-9]){6,6}</Expression>
           </GeneratorOptions>
           <GeneratorType>MySqlStringRegularExpressionGenerator</GeneratorType>
           <GeneratorName>Reg Exp</GeneratorName>
@@ -689,7 +650,7 @@ Kwik-E-Mart|La Compañía|LexCorp|Oceanic Airlines|Skynet|Tabacalera|Laramie|Tri
             <OffsetFromColumnMinDays>0</OffsetFromColumnMinDays>
             <OffsetFromColumnMaxDays>7</OffsetFromColumnMaxDays>
             <MinDate>1970-01-01T00:00:00</MinDate>
-            <MaxDate>2020-02-07T00:00:00+01:00</MaxDate>
+            <MaxDate>2000-01-01T00:00:00</MaxDate>
             <IsRandomizeDate>true</IsRandomizeDate>
           </GeneratorOptions>
           <GeneratorType>MySqlDateGenerator</GeneratorType>
@@ -708,7 +669,7 @@ Kwik-E-Mart|La Compañía|LexCorp|Oceanic Airlines|Skynet|Tabacalera|Laramie|Tri
             <SeedValue>16</SeedValue>
             <Unique>false</Unique>
             <IsAlwaysUnique>false</IsAlwaysUnique>
-            <Expression>[0-9A-Z]+</Expression>
+            <Expression>Empleado|Jefe|Administrativo|Comercial</Expression>
           </GeneratorOptions>
           <GeneratorType>MySqlStringRegularExpressionGenerator</GeneratorType>
           <GeneratorName>Reg Exp</GeneratorName>
@@ -734,7 +695,7 @@ Kwik-E-Mart|La Compañía|LexCorp|Oceanic Airlines|Skynet|Tabacalera|Laramie|Tri
             <OffsetFromColumnMinDays>0</OffsetFromColumnMinDays>
             <OffsetFromColumnMaxDays>7</OffsetFromColumnMaxDays>
             <MinDate>1970-01-01T00:00:00</MinDate>
-            <MaxDate>2020-02-07T00:00:00+01:00</MaxDate>
+            <MaxDate>2016-02-01T00:00:00</MaxDate>
             <IsRandomizeDate>true</IsRandomizeDate>
           </GeneratorOptions>
           <GeneratorType>MySqlDateGenerator</GeneratorType>
@@ -745,15 +706,15 @@ Kwik-E-Mart|La Compañía|LexCorp|Oceanic Airlines|Skynet|Tabacalera|Laramie|Tri
           <Checked>true</Checked>
           <DataType>INT</DataType>
           <GeneratorOptions xsi:type="MySqlIntegerGeneratorOptions">
-            <AllowNulls>true</AllowNulls>
+            <AllowNulls>false</AllowNulls>
             <NullProportion>10</NullProportion>
             <Unique>false</Unique>
             <IsAlwaysUnique>false</IsAlwaysUnique>
             <Increment xsi:type="xsd:int">1</Increment>
             <ValueDistributionMode>Random</ValueDistributionMode>
             <SeedValue>13</SeedValue>
-            <MinValue>-2147483648</MinValue>
-            <MaxValue>2147483647</MaxValue>
+            <MinValue>950</MinValue>
+            <MaxValue>600000</MaxValue>
             <UseDefault>false</UseDefault>
             <DefaultValue>NULL</DefaultValue>
           </GeneratorOptions>
@@ -768,7 +729,7 @@ Kwik-E-Mart|La Compañía|LexCorp|Oceanic Airlines|Skynet|Tabacalera|Laramie|Tri
           <GeneratorOptions xsi:type="ForeignKeyGeneratorOptions">
             <Unique>false</Unique>
             <IsAlwaysUnique>false</IsAlwaysUnique>
-            <AllowNulls>true</AllowNulls>
+            <AllowNulls>false</AllowNulls>
             <NullProportion>10</NullProportion>
             <ValueDistributionMode>Random</ValueDistributionMode>
             <SeedValue>12</SeedValue>
@@ -809,7 +770,7 @@ Kwik-E-Mart|La Compañía|LexCorp|Oceanic Airlines|Skynet|Tabacalera|Laramie|Tri
             <Unique>true</Unique>
             <IsAlwaysUnique>false</IsAlwaysUnique>
             <Increment xsi:type="xsd:int">1</Increment>
-            <ValueDistributionMode>Random</ValueDistributionMode>
+            <ValueDistributionMode>Sequential</ValueDistributionMode>
             <SeedValue>19</SeedValue>
             <MinValue>0</MinValue>
             <MaxValue>2147483647</MaxValue>
@@ -832,8 +793,8 @@ Kwik-E-Mart|La Compañía|LexCorp|Oceanic Airlines|Skynet|Tabacalera|Laramie|Tri
             <Increment xsi:type="xsd:int">1</Increment>
             <ValueDistributionMode>Random</ValueDistributionMode>
             <SeedValue>20</SeedValue>
-            <MinValue>-2147483648</MinValue>
-            <MaxValue>2147483647</MaxValue>
+            <MinValue>100</MinValue>
+            <MaxValue>6000</MaxValue>
             <UseDefault>false</UseDefault>
             <DefaultValue>NULL</DefaultValue>
           </GeneratorOptions>
@@ -854,7 +815,7 @@ Kwik-E-Mart|La Compañía|LexCorp|Oceanic Airlines|Skynet|Tabacalera|Laramie|Tri
             <SeedValue>19</SeedValue>
             <Unique>false</Unique>
             <IsAlwaysUnique>false</IsAlwaysUnique>
-            <Expression>[0-9A-Z]+</Expression>
+            <Expression>Contado|VISA|MASTERCARD|Transferencia bancaria</Expression>
           </GeneratorOptions>
           <GeneratorType>MySqlStringRegularExpressionGenerator</GeneratorType>
           <GeneratorName>Reg Exp</GeneratorName>
@@ -864,43 +825,51 @@ Kwik-E-Mart|La Compañía|LexCorp|Oceanic Airlines|Skynet|Tabacalera|Laramie|Tri
         <Column Name="importe_deposito">
           <Checked>true</Checked>
           <DataType>INT</DataType>
-          <GeneratorOptions xsi:type="MySqlIntegerGeneratorOptions">
+          <GeneratorOptions xsi:type="MySqlWeightedListGeneratorRegexValuesOptions">
+            <AllowEmptyStrings>false</AllowEmptyStrings>
+            <EmptyStringProportion>10</EmptyStringProportion>
+            <MaxSize>10</MaxSize>
             <AllowNulls>true</AllowNulls>
             <NullProportion>10</NullProportion>
+            <ValueDistributionMode>Random</ValueDistributionMode>
+            <SeedValue>22</SeedValue>
             <Unique>false</Unique>
             <IsAlwaysUnique>false</IsAlwaysUnique>
-            <Increment xsi:type="xsd:int">1</Increment>
-            <ValueDistributionMode>Random</ValueDistributionMode>
-            <SeedValue>21</SeedValue>
-            <MinValue>-2147483648</MinValue>
-            <MaxValue>2147483647</MaxValue>
-            <UseDefault>false</UseDefault>
-            <DefaultValue>NULL</DefaultValue>
+            <Values>
+              <WeightedListItem>
+                <Value xsi:type="xsd:string">[1-9][05]0[0]{0,1}</Value>
+                <Weight>25</Weight>
+              </WeightedListItem>
+            </Values>
           </GeneratorOptions>
-          <GeneratorType>MySqlIntegerGenerator</GeneratorType>
-          <GeneratorName>int</GeneratorName>
-          <GeneratorDescription>fill with 32-bit signed integer values</GeneratorDescription>
+          <GeneratorType>MySqlWeightedListGeneratorRegexValues</GeneratorType>
+          <GeneratorName>Weighted List (regexp)</GeneratorName>
+          <GeneratorDescription>values list based on regular expressions with specified frequency of occurrence</GeneratorDescription>
           <Precision>11</Precision>
         </Column>
         <Column Name="plazo_pago">
           <Checked>true</Checked>
           <DataType>INT</DataType>
-          <GeneratorOptions xsi:type="MySqlIntegerGeneratorOptions">
+          <GeneratorOptions xsi:type="MySqlWeightedListGeneratorRegexValuesOptions">
+            <AllowEmptyStrings>false</AllowEmptyStrings>
+            <EmptyStringProportion>10</EmptyStringProportion>
+            <MaxSize>10</MaxSize>
             <AllowNulls>true</AllowNulls>
             <NullProportion>10</NullProportion>
+            <ValueDistributionMode>Random</ValueDistributionMode>
+            <SeedValue>23</SeedValue>
             <Unique>false</Unique>
             <IsAlwaysUnique>false</IsAlwaysUnique>
-            <Increment xsi:type="xsd:int">1</Increment>
-            <ValueDistributionMode>Random</ValueDistributionMode>
-            <SeedValue>22</SeedValue>
-            <MinValue>-2147483648</MinValue>
-            <MaxValue>2147483647</MaxValue>
-            <UseDefault>false</UseDefault>
-            <DefaultValue>NULL</DefaultValue>
+            <Values>
+              <WeightedListItem>
+                <Value xsi:type="xsd:string">30|60|90</Value>
+                <Weight>10</Weight>
+              </WeightedListItem>
+            </Values>
           </GeneratorOptions>
-          <GeneratorType>MySqlIntegerGenerator</GeneratorType>
-          <GeneratorName>int</GeneratorName>
-          <GeneratorDescription>fill with 32-bit signed integer values</GeneratorDescription>
+          <GeneratorType>MySqlWeightedListGeneratorRegexValues</GeneratorType>
+          <GeneratorName>Weighted List (regexp)</GeneratorName>
+          <GeneratorDescription>values list based on regular expressions with specified frequency of occurrence</GeneratorDescription>
           <Precision>11</Precision>
         </Column>
         <Column Name="observaciones">
@@ -915,7 +884,7 @@ Kwik-E-Mart|La Compañía|LexCorp|Oceanic Airlines|Skynet|Tabacalera|Laramie|Tri
             <SeedValue>20</SeedValue>
             <Unique>false</Unique>
             <IsAlwaysUnique>false</IsAlwaysUnique>
-            <Expression>[0-9A-Z]+</Expression>
+            <Expression>Pagada|Entregada|No cobrada</Expression>
           </GeneratorOptions>
           <GeneratorType>MySqlStringRegularExpressionGenerator</GeneratorType>
           <GeneratorName>Reg Exp</GeneratorName>
@@ -928,7 +897,7 @@ Kwik-E-Mart|La Compañía|LexCorp|Oceanic Airlines|Skynet|Tabacalera|Laramie|Tri
           <GeneratorOptions xsi:type="ForeignKeyGeneratorOptions">
             <Unique>false</Unique>
             <IsAlwaysUnique>false</IsAlwaysUnique>
-            <AllowNulls>true</AllowNulls>
+            <AllowNulls>false</AllowNulls>
             <NullProportion>10</NullProportion>
             <ValueDistributionMode>Random</ValueDistributionMode>
             <SeedValue>19</SeedValue>
@@ -993,7 +962,7 @@ Kwik-E-Mart|La Compañía|LexCorp|Oceanic Airlines|Skynet|Tabacalera|Laramie|Tri
             <SeedValue>25</SeedValue>
             <Unique>false</Unique>
             <IsAlwaysUnique>false</IsAlwaysUnique>
-            <Expression>[0-9A-Z]+</Expression>
+            <Expression>Isabel II|Alto Miranda|General Dávila|Plaza Mayor|Camilo Alonso Vega|Daoiz y Velarde|Paseo Pereda</Expression>
           </GeneratorOptions>
           <GeneratorType>MySqlStringRegularExpressionGenerator</GeneratorType>
           <GeneratorName>Reg Exp</GeneratorName>
@@ -1012,7 +981,7 @@ Kwik-E-Mart|La Compañía|LexCorp|Oceanic Airlines|Skynet|Tabacalera|Laramie|Tri
             <SeedValue>26</SeedValue>
             <Unique>false</Unique>
             <IsAlwaysUnique>false</IsAlwaysUnique>
-            <Expression>[0-9A-Z]+</Expression>
+            <Expression>Casa rural|Apartamento|Chalet individual|Piso|Buhardilla|Chalet adosado</Expression>
           </GeneratorOptions>
           <GeneratorType>MySqlStringRegularExpressionGenerator</GeneratorType>
           <GeneratorName>Reg Exp</GeneratorName>
@@ -1030,8 +999,8 @@ Kwik-E-Mart|La Compañía|LexCorp|Oceanic Airlines|Skynet|Tabacalera|Laramie|Tri
             <Increment xsi:type="xsd:int">1</Increment>
             <ValueDistributionMode>Random</ValueDistributionMode>
             <SeedValue>26</SeedValue>
-            <MinValue>-2147483648</MinValue>
-            <MaxValue>2147483647</MaxValue>
+            <MinValue>1</MinValue>
+            <MaxValue>7</MaxValue>
             <UseDefault>false</UseDefault>
             <DefaultValue />
           </GeneratorOptions>
@@ -1043,62 +1012,72 @@ Kwik-E-Mart|La Compañía|LexCorp|Oceanic Airlines|Skynet|Tabacalera|Laramie|Tri
         <Column Name="precio_alquiler_inm">
           <Checked>true</Checked>
           <DataType>INT</DataType>
-          <GeneratorOptions xsi:type="MySqlIntegerGeneratorOptions">
+          <GeneratorOptions xsi:type="MySqlWeightedListGeneratorRegexValuesOptions">
+            <AllowEmptyStrings>false</AllowEmptyStrings>
+            <EmptyStringProportion>10</EmptyStringProportion>
+            <MaxSize>10</MaxSize>
             <AllowNulls>false</AllowNulls>
             <NullProportion>0</NullProportion>
+            <ValueDistributionMode>Random</ValueDistributionMode>
+            <SeedValue>28</SeedValue>
             <Unique>false</Unique>
             <IsAlwaysUnique>false</IsAlwaysUnique>
-            <Increment xsi:type="xsd:int">1</Increment>
-            <ValueDistributionMode>Random</ValueDistributionMode>
-            <SeedValue>27</SeedValue>
-            <MinValue>-2147483648</MinValue>
-            <MaxValue>2147483647</MaxValue>
-            <UseDefault>false</UseDefault>
-            <DefaultValue />
+            <Values>
+              <WeightedListItem>
+                <Value xsi:type="xsd:string">[1-9][05]0</Value>
+                <Weight>10</Weight>
+              </WeightedListItem>
+            </Values>
           </GeneratorOptions>
-          <GeneratorType>MySqlIntegerGenerator</GeneratorType>
-          <GeneratorName>int</GeneratorName>
-          <GeneratorDescription>fill with 32-bit signed integer values</GeneratorDescription>
+          <GeneratorType>MySqlWeightedListGeneratorRegexValues</GeneratorType>
+          <GeneratorName>Weighted List (regexp)</GeneratorName>
+          <GeneratorDescription>values list based on regular expressions with specified frequency of occurrence</GeneratorDescription>
           <Precision>11</Precision>
         </Column>
         <Column Name="precio_venta_inm">
           <Checked>true</Checked>
           <DataType>INT</DataType>
-          <GeneratorOptions xsi:type="MySqlIntegerGeneratorOptions">
+          <GeneratorOptions xsi:type="MySqlWeightedListGeneratorRegexValuesOptions">
+            <AllowEmptyStrings>false</AllowEmptyStrings>
+            <EmptyStringProportion>10</EmptyStringProportion>
+            <MaxSize>10</MaxSize>
             <AllowNulls>false</AllowNulls>
             <NullProportion>0</NullProportion>
+            <ValueDistributionMode>Random</ValueDistributionMode>
+            <SeedValue>29</SeedValue>
             <Unique>false</Unique>
             <IsAlwaysUnique>false</IsAlwaysUnique>
-            <Increment xsi:type="xsd:int">1</Increment>
-            <ValueDistributionMode>Random</ValueDistributionMode>
-            <SeedValue>28</SeedValue>
-            <MinValue>-2147483648</MinValue>
-            <MaxValue>2147483647</MaxValue>
-            <UseDefault>false</UseDefault>
-            <DefaultValue />
+            <Values>
+              <WeightedListItem>
+                <Value xsi:type="xsd:string">[1-9][05]0{3,4}</Value>
+                <Weight>10</Weight>
+              </WeightedListItem>
+            </Values>
           </GeneratorOptions>
-          <GeneratorType>MySqlIntegerGenerator</GeneratorType>
-          <GeneratorName>int</GeneratorName>
-          <GeneratorDescription>fill with 32-bit signed integer values</GeneratorDescription>
+          <GeneratorType>MySqlWeightedListGeneratorRegexValues</GeneratorType>
+          <GeneratorName>Weighted List (regexp)</GeneratorName>
+          <GeneratorDescription>values list based on regular expressions with specified frequency of occurrence</GeneratorDescription>
           <Precision>11</Precision>
         </Column>
         <Column Name="galeria">
           <Checked>true</Checked>
           <DataType>VARCHAR</DataType>
-          <GeneratorOptions xsi:type="MySqlRegularExpressionGeneratorOptions">
+          <GeneratorOptions xsi:type="MySqlConstantGeneratorOptions">
             <AllowEmptyStrings>true</AllowEmptyStrings>
             <EmptyStringProportion>10</EmptyStringProportion>
             <AllowNulls>false</AllowNulls>
             <NullProportion>0</NullProportion>
-            <ValueDistributionMode>Random</ValueDistributionMode>
-            <SeedValue>27</SeedValue>
             <Unique>false</Unique>
             <IsAlwaysUnique>false</IsAlwaysUnique>
-            <Expression>[0-9A-Z]+</Expression>
+            <ValueDistributionMode>Random</ValueDistributionMode>
+            <SeedValue>28</SeedValue>
+            <ConstantDistributionMode>ColumnDefault</ConstantDistributionMode>
+            <UserDefinedConstant xsi:type="xsd:string" />
+            <ColumnDefaultConstant />
           </GeneratorOptions>
-          <GeneratorType>MySqlStringRegularExpressionGenerator</GeneratorType>
-          <GeneratorName>Reg Exp</GeneratorName>
-          <GeneratorDescription>values based on a regular expression</GeneratorDescription>
+          <GeneratorType>MySqlConstantGenerator</GeneratorType>
+          <GeneratorName>Constant</GeneratorName>
+          <GeneratorDescription>fill with a constant or column default value</GeneratorDescription>
           <Length>50</Length>
         </Column>
         <Column Name="id_ofi">
@@ -1129,7 +1108,7 @@ Kwik-E-Mart|La Compañía|LexCorp|Oceanic Airlines|Skynet|Tabacalera|Laramie|Tri
           <GeneratorOptions xsi:type="ForeignKeyGeneratorOptions">
             <Unique>false</Unique>
             <IsAlwaysUnique>false</IsAlwaysUnique>
-            <AllowNulls>true</AllowNulls>
+            <AllowNulls>false</AllowNulls>
             <NullProportion>10</NullProportion>
             <ValueDistributionMode>Random</ValueDistributionMode>
             <SeedValue>26</SeedValue>
@@ -1318,6 +1297,14 @@ Kwik-E-Mart|La Compañía|LexCorp|Oceanic Airlines|Skynet|Tabacalera|Laramie|Tri
             <ValueDistributionMode>Random</ValueDistributionMode>
             <SeedValue>8</SeedValue>
             <Expression># Specify your own script here
+import clr
+#import random
+clr.AddReference("System")
+from System import DBNull
+
+clr.AddReference("System")
+from System import Random
+random = Random(1)
 
 def main(config):
     # column_name - is the column name
@@ -1327,15 +1314,11 @@ def main(config):
     # config["seed"] - is the current random seed
     # config["is_unique"] - is the current random unique
     # config["config_path"] - is the path to the meaningful generators folder
-	my_list = []
-	
-	if not importe_mensual_con:
-		my_list.append(None)
-	else:
-		my_list.append(int(importe_mensual_con) * 2)
 
-	return my_list
-</Expression>
+	if str(importe_mensual_con) == '':
+		return DBNull.Value
+
+	return int(importe_mensual_con) * 2</Expression>
           </GeneratorOptions>
           <GeneratorType>MySqlPythonGenerator</GeneratorType>
           <GeneratorName>Python</GeneratorName>
@@ -1419,22 +1402,30 @@ def main(config):
         <Column Name="duracion_con">
           <Checked>true</Checked>
           <DataType>INT</DataType>
-          <GeneratorOptions xsi:type="MySqlIntegerGeneratorOptions">
+          <GeneratorOptions xsi:type="MySqlWeightedListGeneratorRegexValuesOptions">
+            <AllowEmptyStrings>false</AllowEmptyStrings>
+            <EmptyStringProportion>10</EmptyStringProportion>
+            <MaxSize>10</MaxSize>
             <AllowNulls>true</AllowNulls>
             <NullProportion>10</NullProportion>
+            <ValueDistributionMode>Random</ValueDistributionMode>
+            <SeedValue>10</SeedValue>
             <Unique>false</Unique>
             <IsAlwaysUnique>false</IsAlwaysUnique>
-            <Increment xsi:type="xsd:int">1</Increment>
-            <ValueDistributionMode>Random</ValueDistributionMode>
-            <SeedValue>9</SeedValue>
-            <MinValue>30</MinValue>
-            <MaxValue>365</MaxValue>
-            <UseDefault>false</UseDefault>
-            <DefaultValue>NULL</DefaultValue>
+            <Values>
+              <WeightedListItem>
+                <Value xsi:type="xsd:string">([369]|1[258]|2[147]|3[036])0</Value>
+                <Weight>25</Weight>
+              </WeightedListItem>
+              <WeightedListItem>
+                <Value xsi:type="xsd:string">15</Value>
+                <Weight>21</Weight>
+              </WeightedListItem>
+            </Values>
           </GeneratorOptions>
-          <GeneratorType>MySqlIntegerGenerator</GeneratorType>
-          <GeneratorName>int</GeneratorName>
-          <GeneratorDescription>fill with 32-bit signed integer values</GeneratorDescription>
+          <GeneratorType>MySqlWeightedListGeneratorRegexValues</GeneratorType>
+          <GeneratorName>Weighted List (regexp)</GeneratorName>
+          <GeneratorDescription>values list based on regular expressions with specified frequency of occurrence</GeneratorDescription>
           <Precision>11</Precision>
         </Column>
         <Column Name="id_inm">
@@ -1443,7 +1434,7 @@ def main(config):
           <GeneratorOptions xsi:type="ForeignKeyGeneratorOptions">
             <Unique>false</Unique>
             <IsAlwaysUnique>false</IsAlwaysUnique>
-            <AllowNulls>true</AllowNulls>
+            <AllowNulls>false</AllowNulls>
             <NullProportion>10</NullProportion>
             <ValueDistributionMode>Random</ValueDistributionMode>
             <SeedValue>5</SeedValue>
@@ -1465,7 +1456,7 @@ def main(config):
           <GeneratorOptions xsi:type="ForeignKeyGeneratorOptions">
             <Unique>false</Unique>
             <IsAlwaysUnique>false</IsAlwaysUnique>
-            <AllowNulls>true</AllowNulls>
+            <AllowNulls>false</AllowNulls>
             <NullProportion>10</NullProportion>
             <ValueDistributionMode>Random</ValueDistributionMode>
             <SeedValue>6</SeedValue>
@@ -1487,7 +1478,7 @@ def main(config):
           <GeneratorOptions xsi:type="ForeignKeyGeneratorOptions">
             <Unique>false</Unique>
             <IsAlwaysUnique>false</IsAlwaysUnique>
-            <AllowNulls>true</AllowNulls>
+            <AllowNulls>false</AllowNulls>
             <NullProportion>10</NullProportion>
             <ValueDistributionMode>Random</ValueDistributionMode>
             <SeedValue>7</SeedValue>
@@ -1527,8 +1518,8 @@ def main(config):
             <IsAlwaysUnique>false</IsAlwaysUnique>
             <AllowNulls>false</AllowNulls>
             <NullProportion>0</NullProportion>
-            <ValueDistributionMode>Sequential</ValueDistributionMode>
-            <SeedValue>1</SeedValue>
+            <ValueDistributionMode>Random</ValueDistributionMode>
+            <SeedValue>11</SeedValue>
             <RepeatValues>false</RepeatValues>
             <FromTimes>1</FromTimes>
             <ToTimes>10</ToTimes>
@@ -1607,8 +1598,8 @@ def main(config):
             <IsAlwaysUnique>false</IsAlwaysUnique>
             <AllowNulls>false</AllowNulls>
             <NullProportion>0</NullProportion>
-            <ValueDistributionMode>Sequential</ValueDistributionMode>
-            <SeedValue>10</SeedValue>
+            <ValueDistributionMode>Random</ValueDistributionMode>
+            <SeedValue>18</SeedValue>
             <RepeatValues>false</RepeatValues>
             <FromTimes>1</FromTimes>
             <ToTimes>10</ToTimes>
@@ -1681,7 +1672,7 @@ def main(config):
             <SeedValue>17</SeedValue>
             <Unique>false</Unique>
             <IsAlwaysUnique>false</IsAlwaysUnique>
-            <Expression>[0-9A-Z]+</Expression>
+            <Expression>Comentario|Nota|Correcta|Incorrecta</Expression>
           </GeneratorOptions>
           <GeneratorType>MySqlStringRegularExpressionGenerator</GeneratorType>
           <GeneratorName>Reg Exp</GeneratorName>
@@ -1823,7 +1814,7 @@ def main(config):
             <SeedValue>29</SeedValue>
             <Unique>false</Unique>
             <IsAlwaysUnique>false</IsAlwaysUnique>
-            <Expression>[0-9A-Z]+</Expression>
+            <Expression>Todo correcto|Detectado fallo leve|Detectado fallo grave</Expression>
           </GeneratorOptions>
           <GeneratorType>MySqlStringRegularExpressionGenerator</GeneratorType>
           <GeneratorName>Reg Exp</GeneratorName>
@@ -1836,7 +1827,7 @@ def main(config):
           <GeneratorOptions xsi:type="ForeignKeyGeneratorOptions">
             <Unique>false</Unique>
             <IsAlwaysUnique>false</IsAlwaysUnique>
-            <AllowNulls>true</AllowNulls>
+            <AllowNulls>false</AllowNulls>
             <NullProportion>10</NullProportion>
             <ValueDistributionMode>Random</ValueDistributionMode>
             <SeedValue>29</SeedValue>
@@ -1914,22 +1905,26 @@ def main(config):
         <Column Name="importe">
           <Checked>true</Checked>
           <DataType>INT</DataType>
-          <GeneratorOptions xsi:type="MySqlIntegerGeneratorOptions">
+          <GeneratorOptions xsi:type="MySqlWeightedListGeneratorRegexValuesOptions">
+            <AllowEmptyStrings>false</AllowEmptyStrings>
+            <EmptyStringProportion>10</EmptyStringProportion>
+            <MaxSize>10</MaxSize>
             <AllowNulls>true</AllowNulls>
             <NullProportion>10</NullProportion>
+            <ValueDistributionMode>Random</ValueDistributionMode>
+            <SeedValue>36</SeedValue>
             <Unique>false</Unique>
             <IsAlwaysUnique>false</IsAlwaysUnique>
-            <Increment xsi:type="xsd:int">1</Increment>
-            <ValueDistributionMode>Random</ValueDistributionMode>
-            <SeedValue>35</SeedValue>
-            <MinValue>-2147483648</MinValue>
-            <MaxValue>2147483647</MaxValue>
-            <UseDefault>false</UseDefault>
-            <DefaultValue>NULL</DefaultValue>
+            <Values>
+              <WeightedListItem>
+                <Value xsi:type="xsd:string">[1-9][05][0]{2,3}</Value>
+                <Weight>10</Weight>
+              </WeightedListItem>
+            </Values>
           </GeneratorOptions>
-          <GeneratorType>MySqlIntegerGenerator</GeneratorType>
-          <GeneratorName>int</GeneratorName>
-          <GeneratorDescription>fill with 32-bit signed integer values</GeneratorDescription>
+          <GeneratorType>MySqlWeightedListGeneratorRegexValues</GeneratorType>
+          <GeneratorName>Weighted List (regexp)</GeneratorName>
+          <GeneratorDescription>values list based on regular expressions with specified frequency of occurrence</GeneratorDescription>
           <Precision>11</Precision>
         </Column>
         <Column Name="fecha_pag">
@@ -1964,7 +1959,7 @@ def main(config):
           <GeneratorOptions xsi:type="ForeignKeyGeneratorOptions">
             <Unique>false</Unique>
             <IsAlwaysUnique>false</IsAlwaysUnique>
-            <AllowNulls>true</AllowNulls>
+            <AllowNulls>false</AllowNulls>
             <NullProportion>10</NullProportion>
             <ValueDistributionMode>Random</ValueDistributionMode>
             <SeedValue>34</SeedValue>
@@ -2029,7 +2024,7 @@ def main(config):
             <SeedValue>36</SeedValue>
             <Unique>false</Unique>
             <IsAlwaysUnique>false</IsAlwaysUnique>
-            <Expression>[0-9A-Z]+</Expression>
+            <Expression>Pedro|José|Daniel|Rubén|Pablo|Agustín|Oscar|Antonio|Andrés</Expression>
           </GeneratorOptions>
           <GeneratorType>MySqlStringRegularExpressionGenerator</GeneratorType>
           <GeneratorName>Reg Exp</GeneratorName>
@@ -2048,7 +2043,7 @@ def main(config):
             <SeedValue>37</SeedValue>
             <Unique>false</Unique>
             <IsAlwaysUnique>false</IsAlwaysUnique>
-            <Expression>[0-9A-Z]+</Expression>
+            <Expression>Padre|Madre|Hijo|Hermano|Hermana|Primo|Prima</Expression>
           </GeneratorOptions>
           <GeneratorType>MySqlStringRegularExpressionGenerator</GeneratorType>
           <GeneratorName>Reg Exp</GeneratorName>
@@ -2067,7 +2062,7 @@ def main(config):
             <SeedValue>38</SeedValue>
             <Unique>false</Unique>
             <IsAlwaysUnique>false</IsAlwaysUnique>
-            <Expression>[0-9A-Z]+</Expression>
+            <Expression>Isabel II|Alto Miranda|General Dávila|Plaza Mayor|Camilo Alonso Vega|Daoiz y Velarde|Paseo Pereda</Expression>
           </GeneratorOptions>
           <GeneratorType>MySqlStringRegularExpressionGenerator</GeneratorType>
           <GeneratorName>Reg Exp</GeneratorName>
@@ -2086,7 +2081,7 @@ def main(config):
             <SeedValue>39</SeedValue>
             <Unique>false</Unique>
             <IsAlwaysUnique>false</IsAlwaysUnique>
-            <Expression>[0-9A-Z]+</Expression>
+            <Expression>(91|942|93|943)([0-9]){6,6}</Expression>
           </GeneratorOptions>
           <GeneratorType>MySqlStringRegularExpressionGenerator</GeneratorType>
           <GeneratorName>Reg Exp</GeneratorName>
@@ -2099,7 +2094,7 @@ def main(config):
           <GeneratorOptions xsi:type="ForeignKeyGeneratorOptions">
             <Unique>false</Unique>
             <IsAlwaysUnique>false</IsAlwaysUnique>
-            <AllowNulls>true</AllowNulls>
+            <AllowNulls>false</AllowNulls>
             <NullProportion>10</NullProportion>
             <ValueDistributionMode>Random</ValueDistributionMode>
             <SeedValue>36</SeedValue>
@@ -2189,8 +2184,8 @@ def main(config):
             <Increment xsi:type="xsd:int">1</Increment>
             <ValueDistributionMode>Random</ValueDistributionMode>
             <SeedValue>48</SeedValue>
-            <MinValue>-2147483648</MinValue>
-            <MaxValue>2147483647</MaxValue>
+            <MinValue>100</MinValue>
+            <MaxValue>1000</MaxValue>
             <UseDefault>false</UseDefault>
             <DefaultValue>NULL</DefaultValue>
           </GeneratorOptions>
@@ -2205,7 +2200,7 @@ def main(config):
           <GeneratorOptions xsi:type="ForeignKeyGeneratorOptions">
             <Unique>false</Unique>
             <IsAlwaysUnique>false</IsAlwaysUnique>
-            <AllowNulls>true</AllowNulls>
+            <AllowNulls>false</AllowNulls>
             <NullProportion>10</NullProportion>
             <ValueDistributionMode>Random</ValueDistributionMode>
             <SeedValue>47</SeedValue>
@@ -2227,7 +2222,7 @@ def main(config):
           <GeneratorOptions xsi:type="ForeignKeyGeneratorOptions">
             <Unique>false</Unique>
             <IsAlwaysUnique>false</IsAlwaysUnique>
-            <AllowNulls>true</AllowNulls>
+            <AllowNulls>false</AllowNulls>
             <NullProportion>10</NullProportion>
             <ValueDistributionMode>Random</ValueDistributionMode>
             <SeedValue>48</SeedValue>
@@ -2341,7 +2336,7 @@ def main(config):
             <SeedValue>49</SeedValue>
             <Unique>false</Unique>
             <IsAlwaysUnique>false</IsAlwaysUnique>
-            <Expression>[0-9A-Z]+</Expression>
+            <Expression>Ciente contento|Cliente descontento|Problemas varios en la vivienda|No pude abrir la puerta|No funciona la calefacción|No vino el cliente</Expression>
           </GeneratorOptions>
           <GeneratorType>MySqlStringRegularExpressionGenerator</GeneratorType>
           <GeneratorName>Reg Exp</GeneratorName>
@@ -2352,6 +2347,8 @@ def main(config):
     </Table>
   </Tables>
   <SynchronizationOptions xsi:type="DataSyncOptionGroup">
+    <SynchronizeType>Editor</SynchronizeType>
+    <SynchronizationFileName>C:\Users\Oscar\Documents\poo\m2\Ejercicios\20200207\DataGeneration_20200212-1236.sql</SynchronizationFileName>
     <BulkInsert>false</BulkInsert>
   </SynchronizationOptions>
 </DataGenDocument>

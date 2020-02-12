@@ -2,23 +2,23 @@
 -- USE inmobiliaria;
 -- Modificado script por Rubén
 -- TABLAS
-DROP TABLE IF EXISTS Directores;
-DROP TABLE IF EXISTS Empleados;
-DROP TABLE IF EXISTS Entrevista;
-DROP TABLE IF EXISTS Administrativo;
-DROP TABLE IF EXISTS Pariente;
-DROP TABLE IF EXISTS Oficinas;
-DROP TABLE IF EXISTS Visitas;
-DROP TABLE IF EXISTS Clientes;
-DROP TABLE IF EXISTS Inspecciones;
-DROP TABLE IF EXISTS Inmuebles;
-DROP TABLE IF EXISTS Inmueble_Factura;
-DROP TABLE IF EXISTS Facturas;
-DROP TABLE IF EXISTS Periodico;
-DROP TABLE IF EXISTS Publicidad;
-DROP TABLE IF EXISTS Propietario;
-DROP TABLE IF EXISTS Pago;
-DROP TABLE IF EXISTS Contrato;
+DROP TABLE IF EXISTS Directores CASCADE;
+DROP TABLE IF EXISTS Empleados CASCADE;
+DROP TABLE IF EXISTS Entrevista CASCADE;
+DROP TABLE IF EXISTS Administrativo CASCADE;
+DROP TABLE IF EXISTS Pariente CASCADE;
+DROP TABLE IF EXISTS Oficinas CASCADE;
+DROP TABLE IF EXISTS Visitas CASCADE;
+DROP TABLE IF EXISTS Clientes CASCADE;
+DROP TABLE IF EXISTS Inspecciones CASCADE;
+DROP TABLE IF EXISTS Inmuebles CASCADE;
+DROP TABLE IF EXISTS Inmueble_Factura CASCADE;
+DROP TABLE IF EXISTS Facturas CASCADE;
+DROP TABLE IF EXISTS Periodico CASCADE;
+DROP TABLE IF EXISTS Publicidad CASCADE;
+DROP TABLE IF EXISTS Propietario CASCADE;
+DROP TABLE IF EXISTS Pago CASCADE;
+DROP TABLE IF EXISTS Contrato CASCADE;
 /* Rubén -- Directores */
 CREATE TABLE Directores (
   id_dir            integer,
@@ -81,7 +81,7 @@ CREATE TABLE visitas (
   id_cli int,
   fecha_vis date,
   comentario_vis varchar(255),
-  PRIMARY KEY (id_inm, id_cli, fecha_vis)
+  PRIMARY KEY (id_inm)
 );
 /* Oscar -- Clientes */
 CREATE TABLE clientes (
