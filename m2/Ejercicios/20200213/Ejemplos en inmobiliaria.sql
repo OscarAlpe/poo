@@ -46,4 +46,122 @@ END;
 $BODY$
 LANGUAGE 'plpgsql' VOLATILE;
 
-SELECT * FROM propietario_inmueble(1) AS ("inmuebles" character varying, "Alquilado" TEXT);
+SELECT * FROM propietario_inmueble(10) AS ("inmuebles" int, "Alquilado" TEXT);
+
+/* Función que reciba como parámetro el id de un cliente y devuelva su nombre, dirección y telefono */
+CREATE OR REPLACE FUNCTION cliente_nombre_direccion_telefono(int) RETURNS TEXT AS '
+DECLARE
+	cliente ALIAS FOR $1;
+	tablacli clientes%ROWTYPE;
+BEGIN
+	SELECT * INTO tablacli FROM clientes WHERE id_cli = cliente;
+	RETURN tablacli.nombre_cli || tablacli.direccion_cli || tablacli.telefono_cli;
+END;
+' LANGUAGE 'plpgsql';
+
+SELECT cliente_nombre_direccion_telefono(2);
+
+/* Escriba una función almacenada que reciba como parámetro un código de propietario
+   y devuelva el número de  inmuebles que tiene en nuestra inobiliaria */
+CREATE OR REPLACE FUNCTION propietario_numero_inmuebles(propietario int)
+RETURNS SETOF "record" AS
+$BODY$
+BEGIN
+	RETURN query(SELECT COUNT(*) FROM inmuebles WHERE id_pro = propietario);
+END;
+$BODY$
+LANGUAGE 'plpgsql';
+
+SELECT * FROM propietario_numero_inmuebles(1) AS ("Número de inmuebles" bigint);
+
+/* 2ª manera */
+CREATE OR REPLACE FUNCTION propietario_numero_inmuebles2(propietario int) RETURNS INTEGER AS
+$BODY$
+/* DECLARE
+	num int; */
+BEGIN
+	RETURN (SELECT COUNT(*) FROM inmuebles WHERE id_pro = propietario);
+	/* SELECT COUNT(*) INTO num FROM inmuebles WHERE id_pro = propietario; */
+	/* RETURN num;*/
+END;
+$BODY$
+LANGUAGE 'plpgsql';
+
+SELECT propietario_numero_inmuebles2(1) as "Número de inmuebles";
+
+DROP FUNCTION propietario_numero_inmuebles;
+
+/* Escriba un procedimiento almacenado que reciba como parámetro
+   un código de cliente y devuelva el importe total de facturas
+   asociadas a ese cliente */
+CREATE OR REPLACE FUNCTION importe_total_facturas_cliente(cliente int) RETURNS TEXT AS
+$BODY$
+BEGIN
+	RETURN (SELECT TO_CHAR(SUM(importe_fac), '999G999G999D99') FROM facturas WHERE id_cli = cliente);
+END;
+$BODY$
+LANGUAGE 'plpgsql';
+
+SELECT importe_total_facturas_cliente(2);
+
+DROP FUNCTION importe_total_facturas_cliente;
+
+/* Escribir una función que reciba por parámetro dos códigos de propietario
+   y devuelva el que tenga un número mayor de inmuebles junto con el
+   número de estos */
+CREATE OR REPLACE FUNCTION propietario_con_mayor_numero_inmuebles(propietario1 int, propietario2 int)
+RETURNS SETOF "record" AS
+$BODY$
+DECLARE
+	numInmuebles1 int;
+	numInmuebles2 int;
+BEGIN
+	SELECT COUNT(*) INTO numInmuebles1 FROM inmuebles WHERE id_pro = propietario1;
+	SELECT COUNT(*) INTO numInmuebles2 FROM inmuebles WHERE id_pro = propietario2;
+	IF (numInmuebles1 = numInmuebles2) THEN
+		RETURN query(SELECT numInmuebles2, CAST(propietario1 AS TEXT) || ' y ' || CAST(propietario2 AS TEXT));
+	ELSIF (numInmuebles1 > numInmuebles2) THEN
+		RETURN query(SELECT numInmuebles1, CAST(propietario1 AS TEXT));	
+	ELSE 
+		RETURN query(SELECT numInmuebles2, CAST(propietario2 AS TEXT));
+	END IF;
+END;
+$BODY$
+LANGUAGE 'plpgsql';
+
+SELECT * FROM propietario_con_mayor_numero_inmuebles(1, 10) AS ("Número de inmuebles" int, "Propietario(s)" text);
+
+/* Por Rubén */
+CREATE OR REPLACE FUNCTION propietario_mayor(idpro1 int, idpro2 int)
+RETURNS SETOF RECORD AS '
+DECLARE
+	num1 integer;
+	num2 integer;
+BEGIN
+	SELECT COUNT(*) INTO num1 FROM inmuebles WHERE id_pro = idpro1 group by id_pro;
+	SELECT COUNT(*) INTO num2 FROM inmuebles WHERE id_pro = idpro2 group by id_pro;
+	if (num1>num2) then return query(select idpro1, num1);
+	  elsif (num1<num2) then return query(select idpro2, num2);
+	  	else return query(select idpro1, num1
+						  union
+						  select idpro2, num2);
+	end if;
+END;
+' LANGUAGE 'plpgsql';
+
+SELECT * FROM propietario_mayor(1, 7) AS (idpro int, num int);
+
+/* Pisos que se han anunciado y no se ha amortizado el coste del anuncio */
+CREATE OR REPLACE FUNCTION pisos_coste_no_amortizado()
+RETURNS SETOF RECORD AS '
+BEGIN
+	RETURN query(
+			SELECT * FROM (SELECT p.id_inm, SUM(p.costo_pub) AS sumcostopub FROM publicidad p JOIN inmuebles i USING(id_inm) GROUP BY p.id_inm) s1
+				JOIN
+					(SELECT if.id_inm, SUM(f.importe_fac) AS sumimpfac FROM facturas f JOIN inmueble_factura if USING(id_fac) GROUP BY if.id_inm) s2
+				ON s1.id_inm = s2.id_inm AND sumcostopub > sumimpfac
+		   );
+END;
+' LANGUAGE 'plpgsql';
+
+SELECT * FROM pisos_coste_no_amortizado() AS ("Inmueble publicidad" int, "Total Costo publicidad" bigint, "Inmueble factura" int , "Total factura" bigint)
