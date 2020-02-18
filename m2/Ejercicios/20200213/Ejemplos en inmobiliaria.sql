@@ -157,7 +157,7 @@ RETURNS SETOF RECORD AS '
 BEGIN
 	RETURN query(
 			SELECT * FROM (SELECT p.id_inm, SUM(p.costo_pub) AS sumcostopub FROM publicidad p JOIN inmuebles i USING(id_inm) GROUP BY p.id_inm) s1
-				JOIN
+				LEFT JOIN
 					(SELECT if.id_inm, SUM(f.importe_fac) AS sumimpfac FROM facturas f JOIN inmueble_factura if USING(id_fac) GROUP BY if.id_inm) s2
 				ON s1.id_inm = s2.id_inm AND sumcostopub > sumimpfac
 		   );
