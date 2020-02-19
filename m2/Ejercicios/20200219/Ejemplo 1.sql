@@ -1,0 +1,27 @@
+CREATE OR REPLACE FUNCTION mayor(n1 int, n2 int)
+RETURNS INT AS
+$BODY$
+BEGIN
+	IF n1 > n2 THEN
+		RETURN n1;
+	ELSIF n2 > n1 THEN
+		RETURN n2;
+	ELSE
+		RETURN n1;
+	END IF;
+END;
+$BODY$
+LANGUAGE 'plpgsql';
+
+SELECT mayor(284, 84);
+
+CREATE OR REPLACE FUNCTION mayor2(n1 int, n2 int)
+RETURNS SETOF INT AS
+$BODY$
+BEGIN
+	RETURN query(SELECT GREATEST (n1, n2));
+END;
+$BODY$
+LANGUAGE 'plpgsql';
+
+SELECT mayor2(5, 5);

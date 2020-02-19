@@ -156,7 +156,7 @@ CREATE OR REPLACE FUNCTION pisos_coste_no_amortizado()
 RETURNS SETOF RECORD AS '
 BEGIN
 	RETURN query(
-			SELECT * FROM (SELECT p.id_inm, SUM(p.costo_pub) AS sumcostopub FROM publicidad p JOIN inmuebles i USING(id_inm) GROUP BY p.id_inm) s1
+			SELECT * FROM (SELECT p.id_inm, SUM(p.costo_pub) AS sumcostopub FROM publicidad p GROUP BY p.id_inm) s1
 				LEFT JOIN
 					(SELECT if.id_inm, SUM(f.importe_fac) AS sumimpfac FROM facturas f JOIN inmueble_factura if USING(id_fac) GROUP BY if.id_inm) s2
 				ON s1.id_inm = s2.id_inm AND sumcostopub > sumimpfac
@@ -165,3 +165,30 @@ END;
 ' LANGUAGE 'plpgsql';
 
 SELECT * FROM pisos_coste_no_amortizado() AS ("Inmueble publicidad" int, "Total Costo publicidad" bigint, "Inmueble factura" int , "Total factura" bigint)
+
+/* Hacer una función que vuelque todos los datos de los propietarios de inmuebles que no tengan nombre.
+   La nueva tabla se llamará Pro_SinNombre. Una vez hecho esto los eliminará de la tabla propietarios */
+CREATE OR REPLACE FUNCTION volcar_datos_propietarios(_tabla varchar)
+RETURNS VOID AS
+$BODY$
+BEGIN
+	EXECUTE 'DROP TABLE IF EXISTS ' || QUOTE_IDENT(_tabla);
+	EXECUTE 'CREATE TABLE ' || QUOTE_IDENT(_tabla) || ' AS TABLE propietario WITH NO DATA';
+	EXECUTE 'WITH moved_rows AS (
+			UPDATE propietario SET nombre_pro = ''John Doe''
+		WHERE
+			nombre_pro IS NULL
+		RETURNING *
+	)
+	INSERT INTO ' || QUOTE_IDENT(_tabla) || '
+	SELECT * FROM moved_rows';
+END;
+$BODY$
+LANGUAGE 'plpgsql';
+
+SELECT * FROM volcar_datos_propietarios('oscar')
+SELECT * FROM propietario WHERE nombre_pro IS NULL;
+DELETE FROM Pro_SinNombre;
+SELECT * FROM Pro_SinNombre;
+DROP FUNCTION volcar_datos_propietarios;
+UPDATE propietario SET nombre_pro = NULL WHERE nombre_pro = 'John Doe';
