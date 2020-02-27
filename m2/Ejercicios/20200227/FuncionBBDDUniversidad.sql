@@ -1,0 +1,1 @@
+-- Hacer una función que reciba 2 enteros y que devuelva la media de créditos de asignaturas conprendidas entre uno y otro id
