@@ -340,8 +340,9 @@ CREATE TABLE errores(
 ALTER TABLE clientes ADD COLUMN edad int DEFAULT 0;
 ALTER TABLE provincias ADD COLUMN cantidad int DEFAULT 0;
 ALTER TABLE provincias ADD COLUMN iniciales char(1);
+ALTER TABLE errores ALTER COLUMN mensaje TYPE varchar(255);
 
-/** 1.- Crear un disparador para que cuando insrte un registro en clientes me compruebe si la
+/** 1.- Crear un disparador para que cuando inserte un registro en clientes me compruebe si la
 		edad esta entre 18 y 70. En caso de que no esté produzca una excepción con el mensaje
 		"La edad no es válida". **/
 CREATE OR REPLACE FUNCTION chequea_edad()
@@ -351,11 +352,9 @@ BEGIN
 	IF NEW.edad < 18 OR NEW.edad > 70 THEN
 		INSERT INTO errores (mensaje, fecha, hora) VALUES ('La edad no es válida', current_date, current_time);
 		RAISE NOTICE 'La edad % no es válida', NEW.edad;
-		RETURN NULL;
-	ELSE
-		RETURN NEW;	
+		RETURN OLD;
 	END IF;
-	
+	RETURN NEW;
 END;
 $$
 LANGUAGE plpgsql;
@@ -365,3 +364,50 @@ FOR EACH ROW
 	EXECUTE PROCEDURE chequea_edad();
 
 DROP TRIGGER chequeaEdad ON clientes;
+DROP FUNCTION chequea_edad;
+
+/** 2.- Además, cada vez que un usuario introduzca un registro con una edad no valida debe
+		grabar ese registro en una tabla denominada errores. **/
+CREATE OR REPLACE FUNCTION grabar_error()
+RETURNS TRIGGER AS
+$$
+BEGIN
+	IF NEW.edad < 18 OR NEW.edad > 70 THEN
+		INSERT INTO errores (mensaje, fecha, hora) VALUES ('La edad ' || NEW.edad || ' del codcli ' || NEW.codcli || ' no es válida', current_date, current_time);
+		/* No funciona
+		devuelve este error: "list index out of range"
+		RETURN NULL; */
+	END IF;
+	RETURN NEW;
+END;
+$$
+LANGUAGE plpgsql;
+
+CREATE TRIGGER grabarError BEFORE INSERT ON clientes
+FOR EACH ROW
+	EXECUTE PROCEDURE grabar_error();
+
+DROP TRIGGER grabarError ON clientes;
+DROP FUNCTION grabar_error;
+
+CREATE OR REPLACE FUNCTION graba_errores()
+RETURNS TRIGGER AS
+$$
+BEGIN
+	IF NEW.edad < 18 OR NEW.edad > 70 THEN
+		INSERT INTO errores (mensaje, fecha, hora) VALUES ('La edad no es válida', current_date, current_time);
+		RAISE NOTICE 'La edad no es válida';
+		/* No funciona. Devuelve este error: "list index out of range" */
+		RETURN NULL;
+	END IF;
+	RETURN NEW;
+END;
+$$
+LANGUAGE plpgsql;
+
+CREATE TRIGGER grabaErrorEdad AFTER INSERT ON clientes
+FOR EACH ROW
+	EXECUTE PROCEDURE graba_errores();
+
+DROP TRIGGER grabaErrorEdad ON clientes;
+DROP FUNCTION graba_errores;
