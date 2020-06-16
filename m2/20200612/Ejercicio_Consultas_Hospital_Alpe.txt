@@ -1,2 +1,0 @@
-1. Encuentre a todos los miembros del personal cuyo nombre empiece por 'H'.
-  SELECT * from plantilla WHERE LEFT(apellido, 1) = 'H';

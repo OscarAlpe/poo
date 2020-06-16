@@ -1,0 +1,46 @@
+CLÁUSULA WHERE
+==============
+1. Encuentre a todos los miembros del personal cuyo nombre empiece por 'H'.
+     SELECT * from plantilla WHERE LEFT(apellido, 1) = 'H';
+
+2. ¿Quiénes son las enfermeras y enfermeros que trabajan en turnos de Tarde o Mañana?
+     SELECT * FROM plantilla WHERE funcion LIKE 'Enfermer%';
+
+3. Haga un listado de las enfermeras que ganan entre 2.000.000 y 2.500.000 Pts.
+     SELECT * FROM plantilla WHERE funcion = 'Enfermera' AND salario BETWEEN 2000000 AND 2500000;
+
+FUNCIONES DE CADENA
+===================
+4. Mostrar, para todos los hospitales, el código de hospital, el nombre completo del hospital
+   y su nombre abreviado de tres letras (a esto podemos llamarlo ABR) Ordenar la
+   recuperación por esta abreviatura.
+     SELECT hospital_cod, nombre, LEFT(nombre, 3) as ABR FROM hospital ORDER BY ABR;
+
+7. Crea una consulta para conseguir la siguiente salida:
+COMENTARIO
+--------------------
+El departamento de CONTABILIDAD esta en SEVILLA
+El departamento de INVESTIGACIÓN está en MADRID
+El departamento de VENTAS esta en BARCELONA
+El departamento de PRODUCCIÓN está en BILBAO
+
+  SELECT 'El departamento de ', dnombre, ' está en ', loc FROM dept2;
+
+CLÁUSULA GROUP BY
+=================
+16. Encontrar el salario medio de los Analistas.
+      SELECT oficio, TO_CHAR(ROUND(AVG(salario), 2), '999G999G999D99') FROM emp
+        WHERE oficio = 'ANALISTA' GROUP BY oficio;
+
+17. Encontrar el salario más alto y el salario más bajo de la tabla de empleados, así como la
+    diferencia entre ambos.
+      SELECT TO_CHAR(ROUND(MAX(salario), 2), '999G999G999D99') as "Máximo salario",
+             TO_CHAR(ROUND(MIN(salario), 2), '999G999G999D99') as "Mínimo salario",
+             TO_CHAR(ROUND(MAX(salario) - MIN(salario), 2), '999G999G999D99') as "Diferencia" FROM emp;
+
+18. Calcular el número de oficios diferentes que hay, en total, en los departamentos 10 y 20
+    de la empresa.
+      SELECT dept_no, COUNT(oficio) FROM emp GROUP BY dept_no HAVING dept_no = 10 OR dept_no = 20;
+
+19. Calcular el número de personas que realizan cada oficio en cada departamento.
+      SELECT dept_no, COUNT(emp_no) FROM emp GROUP BY dept_no;
