@@ -44,3 +44,83 @@ CLÁUSULA GROUP BY
 
 19. Calcular el número de personas que realizan cada oficio en cada departamento.
       SELECT dept_no, COUNT(emp_no) FROM emp GROUP BY dept_no;
+
+20. Buscar que departamentos tienen más de cuatro personas trabajando.
+      SELECT dept_no, COUNT(emp_no) AS "Personas trabajando" FROM emp INNER JOIN dept2 USING(dept_no) GROUP BY dept_no HAVING COUNT(emp_no) > 4;
+
+21. Buscar que departamentos tienen más de dos personas trabajando en la misma
+    profesión.
+      SELECT dept_no, oficio, COUNT(emp_no) AS "Personas trabajando" FROM emp
+        INNER JOIN dept2 USING(dept_no) GROUP BY dept_no, oficio HAVING COUNT(emp_no) > 2;
+
+22. Se desea saber el número de empleados por departamento que tienen por oficio el de
+    "EMPLEADO". La salida debe estar ordenada por el numero de departamento.
+      SELECT dept_no, oficio, COUNT(emp_no) AS "Personas trabajando" FROM emp
+        INNER JOIN dept2 USING(dept_no) WHERE oficio = 'EMPLEADO' GROUP BY dept_no, oficio;
+
+23. Se desea saber el salario total (salario más comisión) medio anual de los vendedores de
+    nuestra empresa.
+      SELECT *, TO_CHAR(ROUND(salario + comision, 2), '999G999G999D99') AS "Salario total" from emp;
+
+24. Se desea saber el salario total (salario más comisión) medio anual, tanto de los
+    empleados como de los vendedores de nuestra empresa.
+      SELECT *, TO_CHAR(ROUND(salario + comision, 2), '999G999G999D99') AS "Salario total" from emp
+        WHERE oficio = 'EMPLEADO' OR oficio = 'VENDEDOR';
+
+25. Se desea saber para cada departamento y en cada oficio, el máximo salario y la suma
+    total de salarios, pero solo de aquellos departamentos y oficios cuya suma salarial supere o
+    sea igual que el 50% de su máximo salario. En el muestreo, solo se estudiaron a aquellos
+    empleados que no tienen comisión o la tengan menor que el 25% de su salario.
+      SELECT dept_no, oficio, TO_CHAR(ROUND(MAX(salario), 2), '999G999G999D99') AS "Máximo salario",
+        TO_CHAR(ROUND(SUM(salario), 2), '999G999G999D99') AS "Suma salarios" FROM emp
+          WHERE (comision = 0) OR comision < (salario * 0.25)
+            GROUP BY dept_no, oficio HAVING SUM(salario) > MAX(salario) * 1.5;
+
+30.- Queremos saber el máximo, el mínimo y la media salarial, de cada departamento de la
+     empresa.
+       SELECT dept_no, TO_CHAR(ROUND(MAX(salario), 2), '999G999G999D99') AS "Máximo salario",
+         TO_CHAR(ROUND(MIN(salario), 2), '999G999G999D99') AS "Mínimo salario",
+         TO_CHAR(ROUND(AVG(salario), 2), '999G999G999D99') AS "Media salario" FROM emp GROUP BY dept_no;
+
+COMBINACIONES DE TABLAS
+=======================
+31. Listar, a partir de las tablas EMP y DEPT2, el nombre de cada empleado, su oficio, su
+    número de departamento y el nombre del departamento donde trabajan.
+      SELECT apellido, oficio, dept_no, dnombre FROM emp INNER JOIN dept2 USING(dept_no);
+
+32. Seleccionar los nombres, profesiones y localidades de los departamentos donde trabajan
+    los Analistas.
+      SELECT apellido, oficio, loc FROM emp INNER JOIN dept2 USING(dept_no) WHERE oficio = 'ANALISTA';
+
+33. Se desea conocer el nombre y oficio de todos aquellos empleados que trabajan en
+    Madrid. La salida deberá estar ordenada por el oficio.
+      SELECT apellido, oficio FROM emp INNER JOIN dept2 USING(dept_no) WHERE loc = 'MADRID' ORDER BY oficio;
+
+34. se desea conocer cuántos empleados existen en cada departamento. Devolviendo una
+    salida como la que se presenta (deberá estar ordenada por el número de empleados
+    descendentemente).
+      SELECT dept_no, dnombre, COUNT(emp_no) AS "Número de empleados" FROM emp
+        INNER JOIN dept2 USING(dept_no) GROUP BY dept_no, dnombre ORDER BY COUNT(emp_no) DESC;
+
+35. Se desea conocer, tanto para el departamento de VENTAS, como para el de
+    CONTABILIDAD, su máximo, su mínimo y su media salarial, así como el número de
+    empleados en cada departamento. La salida deberá estar ordenada por el nombre del
+    departamento, y se deberá presentar como la siguiente:
+
+    DNOMBRE                MAXIMO        MÍNIMO        MEDIA  N-EMPL
+    ---------------  ------------  ------------ ------------ -------
+    CONTABILIDAD           650000        169000   379166.667       3
+    VENTAS                 370500        123500   203666.667       6
+
+      SELECT dnombre, MAX(salario) AS "MAXIMO", MIN(salario) AS "MÍNIMO", ROUND(AVG(salario), 3) AS "MEDIA",
+        COUNT(emp_no) AS "N-EMPL" FROM emp
+          INNER JOIN dept2 USING(dept_no) WHERE dnombre IN ('CONTABILIDAD', 'VENTAS')
+            GROUP BY dnombre ORDER BY dnombre;
+
+37. Se desea obtener un resultado como el que aparece, en el que se presenta el numero,
+    nombre y oficio de cada empleado de nuestra empresa que tiene jefe, y lo mismo de su jefe
+    directo. La salida debe estar ordenada por el nombre del empleado.
+      SELECT a.emp_no, a.apellido, a.oficio, a.dir, b.apellido, b.oficio FROM emp a
+        LEFT JOIN emp b ON a.dir = b.emp_no WHERE a.dir <> a.emp_no ORDER BY a.apellido;
+
+
