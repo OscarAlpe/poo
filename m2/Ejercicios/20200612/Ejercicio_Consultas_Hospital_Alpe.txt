@@ -123,4 +123,50 @@ COMBINACIONES DE TABLAS
       SELECT a.emp_no, a.apellido, a.oficio, a.dir, b.apellido, b.oficio FROM emp a
         LEFT JOIN emp b ON a.dir = b.emp_no WHERE a.dir <> a.emp_no ORDER BY a.apellido;
 
+38. Se desea conocer, para todos los departamentos existentes, el mínimo salario de cada
+    departamento, mostrando el resultado como aparece. Para el muestreo del mínimo salario,
+    no queremos tener en cuenta a las personas con oficio de EMPLEADO. La salida estará
+    ordenada por el salario descendentemente.
+      SELECT dept_no, MIN(salario) FROM emp WHERE oficio <> 'EMPLEADO' GROUP BY dept_no ORDER BY MIN(salario) DESC;
+
+SUBCONSULTAS
+============
+42. Obtener el apellido, departamento y oficio de aquellos empleados que tengan un oficio
+    que este en el departamento 20 y que no sea ninguno de los oficios que esta en el
+    departamento de VENTAS.
+      SELECT apellido, dept_no, oficio FROM emp
+        WHERE dept_no = 20 AND dept_no NOT IN (SELECT dept_no FROM dept2 WHERE dnombre = 'VENTAS');
+
+43. Obtener el número de empleado, numero de departamento y apellido de todos los
+    empleados que trabajen en el departamento 20 o 30 y su salario sea mayor que dos veces el
+    mínimo de la empresa. No queremos que el oficio sea PRESIDENTE.
+      SELECT * FROM emp WHERE dept_no IN (20 ,30)
+        AND salario > 2 * (SELECT MIN(salario) FROM emp) AND oficio <> 'PRESIDENTE';
+
+44. Encontrar las personas que ganan 500.000 PTA más que el miembro del personal de
+    sueldo más alto del turno de mañana y que tenga el mismo trabajo que el Sr. Núñez.
+      SELECT * FROM plantilla WHERE (salario > (SELECT MAX(salario) FROM plantilla WHERE turno = 'M') + 500000)
+        AND (funcion = (SELECT funcion FROM plantilla WHERE apellido = 'Nuñez C.'));
+
+45. Queremos averiguar el apellido del individuo más antiguo de la empresa.
+      SELECT apellido FROM emp WHERE fecha_alta = (SELECT MIN(fecha_alta) FROM emp);
+
+46. Presentar los nombres y oficios de los empleados que tienen el mismo trabajo que
+    JIMENEZ.
+      SELECT apellido, oficio FROM emp WHERE oficio = (SELECT oficio FROM emp WHERE apellido = 'JIMENEZ');
+
+47. Queremos conocer el apellido, oficio, salario y departamento en el que trabajan, de
+    todos los individuos cuyo salario sea mayor que el mayor salario del departamento 30.
+      SELECT apellido, oficio, salario, dept_no FROM emp
+        WHERE salario > (SELECT MAX(salario) FROM emp WHERE dept_no = 30);
+
+48. Presentar los nombres y oficios de todos los empleados del departamento 20, cuyo
+    trabajo sea idéntico al de cualquiera de los empleados del departamento de VENTAS.
+      SELECT apellido, oficio FROM emp WHERE dept_no = 20
+        AND oficio IN (SELECT oficio FROM emp WHERE dept_no = (SELECT dept_no FROM dept2 WHERE dnombre = 'VENTAS'));
+
+49. Se desea obtener todos los empleados de los departamentos que no ganan ni el máximo
+    ni el mínimo salarial de la empresa.
+      SELECT * FROM emp WHERE salario > (SELECT MIN(salario) FROM emp) AND salario < (SELECT MAX(salario) FROM emp);
+
 
