@@ -173,4 +173,8 @@ SUBCONSULTAS
       SELECT dept_no, COUNT(emp_no) AS Num FROM emp WHERE DATE_PART('month', fecha_alta) = 12
         GROUP BY dept_no ORDER BY COUNT(emp_no) DESC LIMIT 1;
 
-
+55. Queremos saber el nombre del empleado más joven de cada departamento, así como el
+    nombre de este.
+      SELECT dept_no, dnombre, apellido, fecha_alta FROM dept2
+        INNER JOIN emp e1 USING(dept_no)
+          WHERE (fecha_alta = (SELECT MAX(e2.fecha_alta) FROM emp e2 WHERE e2.dept_no = e1.dept_no));
