@@ -169,4 +169,8 @@ SUBCONSULTAS
     ni el mínimo salarial de la empresa.
       SELECT * FROM emp WHERE salario > (SELECT MIN(salario) FROM emp) AND salario < (SELECT MAX(salario) FROM emp);
 
+53. En qué departamento se dio de alta a más empleados en diciembre.
+      SELECT dept_no, COUNT(emp_no) AS Num FROM emp WHERE DATE_PART('month', fecha_alta) = 12
+        GROUP BY dept_no ORDER BY COUNT(emp_no) DESC LIMIT 1;
+
 

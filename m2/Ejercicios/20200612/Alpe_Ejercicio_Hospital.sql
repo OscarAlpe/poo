@@ -1,5 +1,7 @@
+CREATE DATABASE ejercicio_hospital;
+
 CREATE TABLE hospital (
-  hospital_cod  NUMERIC(2),
+  hospital_cod  NUMERIC(2) NOT NULL,
   nombre        VARCHAR(10),
   direccion     VARCHAR(20),
   telefono      VARCHAR(8),
