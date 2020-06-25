@@ -178,3 +178,14 @@ SUBCONSULTAS
       SELECT dept_no, dnombre, apellido, fecha_alta FROM dept2
         INNER JOIN emp e1 USING(dept_no)
           WHERE (fecha_alta = (SELECT MAX(e2.fecha_alta) FROM emp e2 WHERE e2.dept_no = e1.dept_no));
+
+56. Se desea saber el nombre, oficio y departamento del empleado que más gana del
+    departamento con la media salarial más alta.
+      SELECT apellido, oficio, dept_no FROM public.emp
+        WHERE salario = (SELECT MAX(salario) FROM public.emp WHERE dept_no =
+          (SELECT dept_no FROM public.emp GROUP BY dept_no HAVING AVG(salario) =
+            (SELECT MAX(salario_medio) FROM (SELECT dept_no, AVG(salario) AS salario_medio
+              FROM public.emp GROUP BY dept_no) AS resumen) ) );
+
+57. Se desea obtener información sobre todos los empleados que son jefes de alguien.
+      SELECT * FROM emp WHERE emp_no IN (SELECT DISTINCT dir FROM emp);
