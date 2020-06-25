@@ -17,7 +17,7 @@ public class Ejercicio7 {
     
     String sPrecio = JOptionPane.showInputDialog("Precio del producto:");
     
-    precio = precio.parseDouble(sPrecio);
+    precio = Double.parseDouble(sPrecio);
 
     Double precioIVA = precio * (IVA / 100);
     

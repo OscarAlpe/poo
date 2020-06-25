@@ -15,7 +15,7 @@ public class Ejercicio6 {
     
     String sNumero = JOptionPane.showInputDialog("Número:");
     
-    numero = numero.parseInt(sNumero);
+    numero = Integer.parseInt(sNumero);
    
     if (numero % 2 == 0) {
       System.out.println(numero + " es divisible por 2");

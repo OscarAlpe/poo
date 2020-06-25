@@ -7,10 +7,10 @@ public class Ejercicio2 {
     Double b = new Double(0.0);
 
     String sa = JOptionPane.showInputDialog("Introduce número a:");
-    a = a.parseDouble(sa);
+    a = Double.parseDouble(sa);
     
     String sb = JOptionPane.showInputDialog("Introduce número b:");
-    b = b.parseDouble(sb);
+    b = Double.parseDouble(sb);
 
     if (a > b) {
       System.out.println("a es mayor que b");
