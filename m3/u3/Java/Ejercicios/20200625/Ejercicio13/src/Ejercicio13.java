@@ -13,20 +13,20 @@ public class Ejercicio13 {
   
   public static void main(String[] args) {
     
-    int a, b, c;
+    double a, b, c, x;
     
     String sA = JOptionPane.showInputDialog("Introduce a:");
-    a = Integer.parseInt(sA);
+    a = Double.parseDouble(sA);
     
     String sB = JOptionPane.showInputDialog("Introduce b:");
-    b = Integer.parseInt(sB);
+    b = Double.parseDouble(sB);
 
     String sC = JOptionPane.showInputDialog("Introduce a:");
-    c = Integer.parseInt(sC);
+    c = Double.parseDouble(sC);
 
-PENDIENTE DE TERMINAR
+    x = (-b + Math.sqrt((b*b)-(4*a*c))) / 2*a;
 
-    System.out.println("El total de ventas es:" + tVentas);  
+    System.out.println("El resultado es:" + x);
   }
 
 }

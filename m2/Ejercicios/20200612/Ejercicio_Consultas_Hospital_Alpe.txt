@@ -189,3 +189,42 @@ SUBCONSULTAS
 
 57. Se desea obtener información sobre todos los empleados que son jefes de alguien.
       SELECT * FROM emp WHERE emp_no IN (SELECT DISTINCT dir FROM emp);
+
+58. Recuperar el numero (empleado_no) y nombre de las personas que perciban un salario >
+    que la media de su hospital.
+      SELECT empleado_no, apellido FROM plantilla p1 WHERE salario > 
+        (SELECT AVG(salario) FROM plantilla p2 WHERE p2.hospital_cod = p1.hospital_cod GROUP BY hospital_cod);
+
+ACTUALIZACIONES
+===============
+63. Cambiar al paciente (tabla ENFERMO) número 74835 la dirección a Alcalá 411.
+      UPDATE enfermo SET direccion = 'Alcalá 411' WHERE inscripcion = 74835;
+
+64. Poner todas las direcciones de la tabla ENFERMO a null.
+      UPDATE enfermo SET direccion = NULL;
+
+65. Igualar la dirección y fecha de nacimiento del paciente 10995 a los valores de las
+    columnas correspondientes almacenadas para el paciente 14024.
+      UPDATE enfermo SET direccion = (SELECT direccion FROM enfermo WHERE inscripcion = 14024) WHERE inscripcion = 10995;
+      UPDATE enfermo SET fecha_nac = (SELECT fecha_nac FROM enfermo WHERE inscripcion = 14024) WHERE inscripcion = 10995;
+
+66. En todos los hospitales del país se ha recibido un aumento del presupuesto, por lo que se
+    incrementará el número de camas disponibles en un 10%. ¿Como se haría en SQL?
+      UPDATE hospital h1 set num_cama =
+        (SELECT ROUND(num_cama * 1.10, 0) FROM hospital h2 WHERE h1.hospital_cod = h2.hospital_cod);
+
+CREACIÓN DE VISTAS
+==================
+69. Crear una vista para los departamentos 10 y 20.
+      - Crear una vista para los departamentos 10 y 30.
+
+        CREATE VIEW vista10 AS
+          SELECT * FROM dept2 WHERE dept_no = 10;
+
+        CREATE VIEW vista30 AS
+          SELECT * FROM dept2 WHERE dept_no = 30;
+
+      - Hacer una JOIN de las dos vistas anteriores.
+          SELECT * FROM vista10 INNER JOIN emp USING(dept_no);
+
+          SELECT * FROM vista30 INNER JOIN emp USING(dept_no);
