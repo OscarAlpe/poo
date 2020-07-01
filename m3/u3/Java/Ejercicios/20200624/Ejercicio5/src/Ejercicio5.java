@@ -17,7 +17,7 @@ public class Ejercicio5 {
     
     String sRadio = JOptionPane.showInputDialog("Radio:");
     
-    radio = Double  .parseDouble(sRadio);
+    radio = Double.parseDouble(sRadio);
     
     area = Math.PI * 2 * radio;
     
