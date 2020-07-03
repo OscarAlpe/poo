@@ -1,0 +1,230 @@
+CLÁUSULA WHERE
+==============
+1. Encuentre a todos los miembros del personal cuyo nombre empiece por 'H'.
+     SELECT * from plantilla WHERE LEFT(apellido, 1) = 'H';
+
+2. ¿Quiénes son las enfermeras y enfermeros que trabajan en turnos de Tarde o Mañana?
+     SELECT * FROM plantilla WHERE funcion LIKE 'Enfermer%';
+
+3. Haga un listado de las enfermeras que ganan entre 2.000.000 y 2.500.000 Pts.
+     SELECT * FROM plantilla WHERE funcion = 'Enfermera' AND salario BETWEEN 2000000 AND 2500000;
+
+FUNCIONES DE CADENA
+===================
+4. Mostrar, para todos los hospitales, el código de hospital, el nombre completo del hospital
+   y su nombre abreviado de tres letras (a esto podemos llamarlo ABR) Ordenar la
+   recuperación por esta abreviatura.
+     SELECT hospital_cod, nombre, LEFT(nombre, 3) as ABR FROM hospital ORDER BY ABR;
+
+7. Crea una consulta para conseguir la siguiente salida:
+COMENTARIO
+--------------------
+El departamento de CONTABILIDAD esta en SEVILLA
+El departamento de INVESTIGACIÓN está en MADRID
+El departamento de VENTAS esta en BARCELONA
+El departamento de PRODUCCIÓN está en BILBAO
+
+  SELECT 'El departamento de ', dnombre, ' está en ', loc FROM dept2;
+
+CLÁUSULA GROUP BY
+=================
+16. Encontrar el salario medio de los Analistas.
+      SELECT oficio, TO_CHAR(ROUND(AVG(salario), 2), '999G999G999D99') FROM emp
+        WHERE oficio = 'ANALISTA' GROUP BY oficio;
+
+17. Encontrar el salario más alto y el salario más bajo de la tabla de empleados, así como la
+    diferencia entre ambos.
+      SELECT TO_CHAR(ROUND(MAX(salario), 2), '999G999G999D99') as "Máximo salario",
+             TO_CHAR(ROUND(MIN(salario), 2), '999G999G999D99') as "Mínimo salario",
+             TO_CHAR(ROUND(MAX(salario) - MIN(salario), 2), '999G999G999D99') as "Diferencia" FROM emp;
+
+18. Calcular el número de oficios diferentes que hay, en total, en los departamentos 10 y 20
+    de la empresa.
+      SELECT dept_no, COUNT(oficio) FROM emp GROUP BY dept_no HAVING dept_no = 10 OR dept_no = 20;
+
+19. Calcular el número de personas que realizan cada oficio en cada departamento.
+      SELECT dept_no, COUNT(emp_no) FROM emp GROUP BY dept_no;
+
+20. Buscar que departamentos tienen más de cuatro personas trabajando.
+      SELECT dept_no, COUNT(emp_no) AS "Personas trabajando" FROM emp INNER JOIN dept2 USING(dept_no) GROUP BY dept_no HAVING COUNT(emp_no) > 4;
+
+21. Buscar que departamentos tienen más de dos personas trabajando en la misma
+    profesión.
+      SELECT dept_no, oficio, COUNT(emp_no) AS "Personas trabajando" FROM emp
+        INNER JOIN dept2 USING(dept_no) GROUP BY dept_no, oficio HAVING COUNT(emp_no) > 2;
+
+22. Se desea saber el número de empleados por departamento que tienen por oficio el de
+    "EMPLEADO". La salida debe estar ordenada por el numero de departamento.
+      SELECT dept_no, oficio, COUNT(emp_no) AS "Personas trabajando" FROM emp
+        INNER JOIN dept2 USING(dept_no) WHERE oficio = 'EMPLEADO' GROUP BY dept_no, oficio;
+
+23. Se desea saber el salario total (salario más comisión) medio anual de los vendedores de
+    nuestra empresa.
+      SELECT *, TO_CHAR(ROUND(salario + comision, 2), '999G999G999D99') AS "Salario total" from emp;
+
+24. Se desea saber el salario total (salario más comisión) medio anual, tanto de los
+    empleados como de los vendedores de nuestra empresa.
+      SELECT *, TO_CHAR(ROUND(salario + comision, 2), '999G999G999D99') AS "Salario total" from emp
+        WHERE oficio = 'EMPLEADO' OR oficio = 'VENDEDOR';
+
+25. Se desea saber para cada departamento y en cada oficio, el máximo salario y la suma
+    total de salarios, pero solo de aquellos departamentos y oficios cuya suma salarial supere o
+    sea igual que el 50% de su máximo salario. En el muestreo, solo se estudiaron a aquellos
+    empleados que no tienen comisión o la tengan menor que el 25% de su salario.
+      SELECT dept_no, oficio, TO_CHAR(ROUND(MAX(salario), 2), '999G999G999D99') AS "Máximo salario",
+        TO_CHAR(ROUND(SUM(salario), 2), '999G999G999D99') AS "Suma salarios" FROM emp
+          WHERE (comision = 0) OR comision < (salario * 0.25)
+            GROUP BY dept_no, oficio HAVING SUM(salario) > MAX(salario) * 1.5;
+
+30.- Queremos saber el máximo, el mínimo y la media salarial, de cada departamento de la
+     empresa.
+       SELECT dept_no, TO_CHAR(ROUND(MAX(salario), 2), '999G999G999D99') AS "Máximo salario",
+         TO_CHAR(ROUND(MIN(salario), 2), '999G999G999D99') AS "Mínimo salario",
+         TO_CHAR(ROUND(AVG(salario), 2), '999G999G999D99') AS "Media salario" FROM emp GROUP BY dept_no;
+
+COMBINACIONES DE TABLAS
+=======================
+31. Listar, a partir de las tablas EMP y DEPT2, el nombre de cada empleado, su oficio, su
+    número de departamento y el nombre del departamento donde trabajan.
+      SELECT apellido, oficio, dept_no, dnombre FROM emp INNER JOIN dept2 USING(dept_no);
+
+32. Seleccionar los nombres, profesiones y localidades de los departamentos donde trabajan
+    los Analistas.
+      SELECT apellido, oficio, loc FROM emp INNER JOIN dept2 USING(dept_no) WHERE oficio = 'ANALISTA';
+
+33. Se desea conocer el nombre y oficio de todos aquellos empleados que trabajan en
+    Madrid. La salida deberá estar ordenada por el oficio.
+      SELECT apellido, oficio FROM emp INNER JOIN dept2 USING(dept_no) WHERE loc = 'MADRID' ORDER BY oficio;
+
+34. se desea conocer cuántos empleados existen en cada departamento. Devolviendo una
+    salida como la que se presenta (deberá estar ordenada por el número de empleados
+    descendentemente).
+      SELECT dept_no, dnombre, COUNT(emp_no) AS "Número de empleados" FROM emp
+        INNER JOIN dept2 USING(dept_no) GROUP BY dept_no, dnombre ORDER BY COUNT(emp_no) DESC;
+
+35. Se desea conocer, tanto para el departamento de VENTAS, como para el de
+    CONTABILIDAD, su máximo, su mínimo y su media salarial, así como el número de
+    empleados en cada departamento. La salida deberá estar ordenada por el nombre del
+    departamento, y se deberá presentar como la siguiente:
+
+    DNOMBRE                MAXIMO        MÍNIMO        MEDIA  N-EMPL
+    ---------------  ------------  ------------ ------------ -------
+    CONTABILIDAD           650000        169000   379166.667       3
+    VENTAS                 370500        123500   203666.667       6
+
+      SELECT dnombre, MAX(salario) AS "MAXIMO", MIN(salario) AS "MÍNIMO", ROUND(AVG(salario), 3) AS "MEDIA",
+        COUNT(emp_no) AS "N-EMPL" FROM emp
+          INNER JOIN dept2 USING(dept_no) WHERE dnombre IN ('CONTABILIDAD', 'VENTAS')
+            GROUP BY dnombre ORDER BY dnombre;
+
+37. Se desea obtener un resultado como el que aparece, en el que se presenta el numero,
+    nombre y oficio de cada empleado de nuestra empresa que tiene jefe, y lo mismo de su jefe
+    directo. La salida debe estar ordenada por el nombre del empleado.
+      SELECT a.emp_no, a.apellido, a.oficio, a.dir, b.apellido, b.oficio FROM emp a
+        LEFT JOIN emp b ON a.dir = b.emp_no WHERE a.dir <> a.emp_no ORDER BY a.apellido;
+
+38. Se desea conocer, para todos los departamentos existentes, el mínimo salario de cada
+    departamento, mostrando el resultado como aparece. Para el muestreo del mínimo salario,
+    no queremos tener en cuenta a las personas con oficio de EMPLEADO. La salida estará
+    ordenada por el salario descendentemente.
+      SELECT dept_no, MIN(salario) FROM emp WHERE oficio <> 'EMPLEADO' GROUP BY dept_no ORDER BY MIN(salario) DESC;
+
+SUBCONSULTAS
+============
+42. Obtener el apellido, departamento y oficio de aquellos empleados que tengan un oficio
+    que este en el departamento 20 y que no sea ninguno de los oficios que esta en el
+    departamento de VENTAS.
+      SELECT apellido, dept_no, oficio FROM emp
+        WHERE dept_no = 20 AND dept_no NOT IN (SELECT dept_no FROM dept2 WHERE dnombre = 'VENTAS');
+
+43. Obtener el número de empleado, numero de departamento y apellido de todos los
+    empleados que trabajen en el departamento 20 o 30 y su salario sea mayor que dos veces el
+    mínimo de la empresa. No queremos que el oficio sea PRESIDENTE.
+      SELECT * FROM emp WHERE dept_no IN (20 ,30)
+        AND salario > 2 * (SELECT MIN(salario) FROM emp) AND oficio <> 'PRESIDENTE';
+
+44. Encontrar las personas que ganan 500.000 PTA más que el miembro del personal de
+    sueldo más alto del turno de mañana y que tenga el mismo trabajo que el Sr. Núñez.
+      SELECT * FROM plantilla WHERE (salario > (SELECT MAX(salario) FROM plantilla WHERE turno = 'M') + 500000)
+        AND (funcion = (SELECT funcion FROM plantilla WHERE apellido = 'Nuñez C.'));
+
+45. Queremos averiguar el apellido del individuo más antiguo de la empresa.
+      SELECT apellido FROM emp WHERE fecha_alta = (SELECT MIN(fecha_alta) FROM emp);
+
+46. Presentar los nombres y oficios de los empleados que tienen el mismo trabajo que
+    JIMENEZ.
+      SELECT apellido, oficio FROM emp WHERE oficio = (SELECT oficio FROM emp WHERE apellido = 'JIMENEZ');
+
+47. Queremos conocer el apellido, oficio, salario y departamento en el que trabajan, de
+    todos los individuos cuyo salario sea mayor que el mayor salario del departamento 30.
+      SELECT apellido, oficio, salario, dept_no FROM emp
+        WHERE salario > (SELECT MAX(salario) FROM emp WHERE dept_no = 30);
+
+48. Presentar los nombres y oficios de todos los empleados del departamento 20, cuyo
+    trabajo sea idéntico al de cualquiera de los empleados del departamento de VENTAS.
+      SELECT apellido, oficio FROM emp WHERE dept_no = 20
+        AND oficio IN (SELECT oficio FROM emp WHERE dept_no = (SELECT dept_no FROM dept2 WHERE dnombre = 'VENTAS'));
+
+49. Se desea obtener todos los empleados de los departamentos que no ganan ni el máximo
+    ni el mínimo salarial de la empresa.
+      SELECT * FROM emp WHERE salario > (SELECT MIN(salario) FROM emp) AND salario < (SELECT MAX(salario) FROM emp);
+
+53. En qué departamento se dio de alta a más empleados en diciembre.
+      SELECT dept_no, COUNT(emp_no) AS Num FROM emp WHERE DATE_PART('month', fecha_alta) = 12
+        GROUP BY dept_no ORDER BY COUNT(emp_no) DESC LIMIT 1;
+
+55. Queremos saber el nombre del empleado más joven de cada departamento, así como el
+    nombre de este.
+      SELECT dept_no, dnombre, apellido, fecha_alta FROM dept2
+        INNER JOIN emp e1 USING(dept_no)
+          WHERE (fecha_alta = (SELECT MAX(e2.fecha_alta) FROM emp e2 WHERE e2.dept_no = e1.dept_no));
+
+56. Se desea saber el nombre, oficio y departamento del empleado que más gana del
+    departamento con la media salarial más alta.
+      SELECT apellido, oficio, dept_no FROM public.emp
+        WHERE salario = (SELECT MAX(salario) FROM public.emp WHERE dept_no =
+          (SELECT dept_no FROM public.emp GROUP BY dept_no HAVING AVG(salario) =
+            (SELECT MAX(salario_medio) FROM (SELECT dept_no, AVG(salario) AS salario_medio
+              FROM public.emp GROUP BY dept_no) AS resumen) ) );
+
+57. Se desea obtener información sobre todos los empleados que son jefes de alguien.
+      SELECT * FROM emp WHERE emp_no IN (SELECT DISTINCT dir FROM emp);
+
+58. Recuperar el numero (empleado_no) y nombre de las personas que perciban un salario >
+    que la media de su hospital.
+      SELECT empleado_no, apellido FROM plantilla p1 WHERE salario > 
+        (SELECT AVG(salario) FROM plantilla p2 WHERE p2.hospital_cod = p1.hospital_cod GROUP BY hospital_cod);
+
+ACTUALIZACIONES
+===============
+63. Cambiar al paciente (tabla ENFERMO) número 74835 la dirección a Alcalá 411.
+      UPDATE enfermo SET direccion = 'Alcalá 411' WHERE inscripcion = 74835;
+
+64. Poner todas las direcciones de la tabla ENFERMO a null.
+      UPDATE enfermo SET direccion = NULL;
+
+65. Igualar la dirección y fecha de nacimiento del paciente 10995 a los valores de las
+    columnas correspondientes almacenadas para el paciente 14024.
+      UPDATE enfermo SET direccion = (SELECT direccion FROM enfermo WHERE inscripcion = 14024) WHERE inscripcion = 10995;
+      UPDATE enfermo SET fecha_nac = (SELECT fecha_nac FROM enfermo WHERE inscripcion = 14024) WHERE inscripcion = 10995;
+
+66. En todos los hospitales del país se ha recibido un aumento del presupuesto, por lo que se
+    incrementará el número de camas disponibles en un 10%. ¿Como se haría en SQL?
+      UPDATE hospital h1 set num_cama =
+        (SELECT ROUND(num_cama * 1.10, 0) FROM hospital h2 WHERE h1.hospital_cod = h2.hospital_cod);
+
+CREACIÓN DE VISTAS
+==================
+69. Crear una vista para los departamentos 10 y 20.
+      - Crear una vista para los departamentos 10 y 30.
+
+        CREATE VIEW vista10 AS
+          SELECT * FROM dept2 WHERE dept_no = 10;
+
+        CREATE VIEW vista30 AS
+          SELECT * FROM dept2 WHERE dept_no = 30;
+
+      - Hacer una JOIN de las dos vistas anteriores.
+          SELECT * FROM vista10 INNER JOIN emp USING(dept_no);
+
+          SELECT * FROM vista30 INNER JOIN emp USING(dept_no);
